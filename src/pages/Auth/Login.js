@@ -13,14 +13,17 @@ import {
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
 import api from '../../util/api'
 import { Link, useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { setUser } from '../../redux/auth'
 
 const Login = () => {
+  const dispatch = useDispatch()
   const navigate = useNavigate()
   const onFinish = async values => {
     try {
       const res = await api.post('/pharmacists/login', values)
-      console.log(res)
       if (res.status === 200) {
+        dispatch(setUser(res?.data?.pharmacist))
         localStorage.setItem('medbox-token', res.data.pharmacist.token)
         return navigate('/')
       }

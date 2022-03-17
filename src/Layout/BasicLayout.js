@@ -32,9 +32,6 @@ const BasicLayout = props => {
           <Menu.Item key='1' icon={<PieChartOutlined />}>
             <Link to={'/'}>Dashboard</Link>
           </Menu.Item>
-          <Menu.Item key='2' icon={<DesktopOutlined />}>
-            <Link to={'/medicines'}>Medicines</Link>
-          </Menu.Item>
           <SubMenu key='sub1' icon={<UserOutlined />} title='Stores'>
             <Menu.Item key='3'>
               <Link to={'/stores'}>View Stores</Link>
@@ -43,9 +40,11 @@ const BasicLayout = props => {
               <Link to={'/stores/register-store'}>Register Store</Link>
             </Menu.Item>
           </SubMenu>
-          <SubMenu key='sub2' icon={<TeamOutlined />} title='Team'>
-            <Menu.Item key='6'>Team 1</Menu.Item>
-            <Menu.Item key='8'>Team 2</Menu.Item>
+          <SubMenu key='sub2' icon={<TeamOutlined />} title='Medicine'>
+            <Menu.Item key='6'>
+              <Link to={'/medicines'}>Medicines</Link>
+            </Menu.Item>
+            <Menu.Item key='8'>Add medicine</Menu.Item>
           </SubMenu>
           <Menu.Item key='9' icon={<FileOutlined />}>
             My Store
