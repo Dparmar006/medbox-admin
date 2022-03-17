@@ -19,6 +19,7 @@ const Login = () => {
   const onFinish = async values => {
     try {
       const res = await api.post('/pharmacists/login', values)
+      console.log(res)
       if (res.status === 200) {
         localStorage.setItem('medbox-token', res.data.pharmacist.token)
         return navigate('/')

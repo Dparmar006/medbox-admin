@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import BasicLayout from '../Layout/BasicLayout'
 import { Card, message, Row, Col, Divider } from 'antd'
-import api from '../util/api'
+import api from '../../../util/api'
 
 const Medicines = () => {
   const [medicines, setMedicines] = useState([])

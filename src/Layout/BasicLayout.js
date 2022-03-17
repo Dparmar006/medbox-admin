@@ -4,7 +4,8 @@ import {
   PieChartOutlined,
   FileOutlined,
   TeamOutlined,
-  UserOutlined
+  UserOutlined,
+  MedicineBoxOutlined
 } from '@ant-design/icons'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
@@ -47,7 +48,10 @@ const BasicLayout = props => {
             <Menu.Item key='8'>Team 2</Menu.Item>
           </SubMenu>
           <Menu.Item key='9' icon={<FileOutlined />}>
-            Files
+            My Store
+          </Menu.Item>
+          <Menu.Item key='10' icon={<MedicineBoxOutlined />}>
+            <Link to='/my-medicines'>My Medicines</Link>
           </Menu.Item>
         </Menu>
       </Sider>
