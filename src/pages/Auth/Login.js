@@ -15,6 +15,7 @@ import api from '../../util/api'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { setUser } from '../../redux/auth'
+import { setStore } from '../../redux/store/index'
 
 const Login = () => {
   const dispatch = useDispatch()
@@ -24,6 +25,7 @@ const Login = () => {
       const res = await api.post('/pharmacists/login', values)
       if (res.status === 200) {
         dispatch(setUser(res?.data?.pharmacist))
+        dispatch(setStore(res?.data?.store))
         localStorage.setItem('medbox-token', res.data.pharmacist.token)
         return navigate('/')
       }

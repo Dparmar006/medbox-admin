@@ -5,10 +5,12 @@ import {
   FileOutlined,
   TeamOutlined,
   UserOutlined,
-  MedicineBoxOutlined
+  MedicineBoxOutlined,
+  ShopOutlined
 } from '@ant-design/icons'
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { Link, NavLink } from 'react-router-dom'
+import './BasicLayout.css'
 
 const { Header, Content, Footer, Sider } = Layout
 const { SubMenu } = Menu
@@ -20,31 +22,36 @@ const BasicLayout = props => {
     setSidebarCollapsed(!sidebrCollapsed)
   }
 
+  useEffect(() => {
+    document.title = props.title + ' | Medbox' || 'Medbox'
+    return () => (document.title = 'Loading')
+  }, [props.title])
+
   return (
     <Layout style={{ minHeight: '100vh' }}>
       <Sider collapsible collapsed={sidebrCollapsed} onCollapse={onCollapse}>
         <div className='logo'>
-          <Title level={2} type='secondary'>
-            Medbox
-          </Title>
+          {sidebrCollapsed ? <h2>MB</h2> : <h2>Medbox</h2>}
         </div>
-        <Menu theme='dark' defaultSelectedKeys={['1']} mode='inline'>
+        <Menu theme='dark' mode='vertical'>
           <Menu.Item key='1' icon={<PieChartOutlined />}>
             <Link to={'/'}>Dashboard</Link>
           </Menu.Item>
-          <SubMenu key='sub1' icon={<UserOutlined />} title='Stores'>
+          <SubMenu key='sub1' icon={<ShopOutlined />} title='Stores'>
             <Menu.Item key='3'>
               <Link to={'/stores'}>View Stores</Link>
             </Menu.Item>
             <Menu.Item key='4'>
-              <Link to={'/stores/register-store'}>Register Store</Link>
+              <Link to={'/register-store'}>Register Store</Link>
             </Menu.Item>
           </SubMenu>
-          <SubMenu key='sub2' icon={<TeamOutlined />} title='Medicine'>
+          <SubMenu key='sub2' icon={<MedicineBoxOutlined />} title='Medicines'>
             <Menu.Item key='6'>
               <Link to={'/medicines'}>Medicines</Link>
             </Menu.Item>
-            <Menu.Item key='8'>Add medicine</Menu.Item>
+            <Menu.Item key='8'>
+              <Link to={'/add-medicines'}>Add Medicines</Link>
+            </Menu.Item>
           </SubMenu>
           <Menu.Item key='9' icon={<FileOutlined />}>
             My Store
@@ -56,9 +63,9 @@ const BasicLayout = props => {
       </Sider>
       <Layout className='site-layout'>
         <Header className='site-layout-background' style={{ padding: 0 }} />
-        <Content style={{ margin: '0 16px' }}>{props.children}</Content>
+        <Content style={{ margin: '16px 16px' }}>{props.children}</Content>
         <Footer style={{ textAlign: 'center' }}>
-          Ant Design ©2018 Created by Ant UED
+          Medbox ©{new Date().getFullYear()} Created by Dixit
         </Footer>
       </Layout>
     </Layout>

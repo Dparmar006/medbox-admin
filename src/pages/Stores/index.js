@@ -1,5 +1,6 @@
 import { Card, Col, Divider, message, Row } from 'antd'
 import React, { useEffect, useState } from 'react'
+import LoadingSkeleton from '../../components/LoadingSkeleton'
 import BasicLayout from '../../Layout/BasicLayout'
 import api from '../../util/api'
 
@@ -21,9 +22,11 @@ const Stores = () => {
   useEffect(() => getStores(), [])
 
   return (
-    <BasicLayout>
-      <Row gutter={16}>
-        {stores.map(store => (
+    <Row gutter={16}>
+      {isLoading ? (
+        <LoadingSkeleton />
+      ) : (
+        stores.map(store => (
           <Col xl={6} key={store._id}>
             <Card style={{ marginTop: 16 }} loading={isLoading}>
               <h3>
@@ -35,9 +38,9 @@ const Stores = () => {
               </h4>
             </Card>
           </Col>
-        ))}
-      </Row>
-    </BasicLayout>
+        ))
+      )}
+    </Row>
   )
 }
 

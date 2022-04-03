@@ -4,7 +4,8 @@ const initialState = {
   firstName: '',
   lastName: '',
   email: '',
-  token: ''
+  token: localStorage.getItem('medbox-token'),
+  role: null
 }
 
 export const authSlice = createSlice({

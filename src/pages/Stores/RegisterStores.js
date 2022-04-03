@@ -1,31 +1,46 @@
 import React from 'react'
-import { Form, Input, InputNumber, Button, Row, Col } from 'antd'
+import {
+  Form,
+  Input,
+  InputNumber,
+  Button,
+  Row,
+  Col,
+  Space,
+  message,
+  Card
+} from 'antd'
 import BasicLayout from '../../Layout/BasicLayout'
+import api from '../../util/api'
+import { PlusOutlined } from '@ant-design/icons'
 
 const RegisterStores = () => {
-  const onFinish = values => {
-    console.log(values)
-  }
-  const validateMessages = {
-    required: '${label} is required!',
-    types: {
-      email: '${label} is not a valid email!',
-      number: '${label} is not a valid number!'
-    },
-    number: {
-      range: '${label} must be between ${min} and ${max}'
+  const [form] = Form.useForm()
+
+  const onFinish = async values => {
+    try {
+      const res = await api.post('/stores', values)
+      if (res.status === 201) {
+        message.success(res?.data?.message)
+        form.resetFields()
+      } else {
+        message.success(res?.response?.data?.message)
+      }
+    } catch (err) {
+      message.error(err?.response.message)
     }
   }
 
   return (
-    <BasicLayout>
-      <Form
-        name='nest-messages'
-        onFinish={onFinish}
-        validateMessages={validateMessages}
-      >
-        <Row gutter={24}>
-          <Col xl={6} md={12} sm={24}>
+    <Card style={{ width: '80%', margin: 'auto' }}>
+      <Form name='add-medicine-form' onFinish={onFinish} layout='vertical'>
+        <Row
+          gutter={'12'}
+          style={{ height: '100%', padding: '2rem' }}
+          justify='start'
+          align='middle'
+        >
+          <Col xl={12} md={12} sm={24}>
             <Form.Item
               name={['name']}
               label='Name'
@@ -38,9 +53,9 @@ const RegisterStores = () => {
               <Input />
             </Form.Item>
           </Col>
-          <Col xl={6} md={12} sm={24}>
+          <Col xl={12} md={12} sm={24}>
             <Form.Item
-              name={['user', 'name']}
+              name={['city']}
               label='City'
               rules={[
                 {
@@ -51,45 +66,37 @@ const RegisterStores = () => {
               <Input />
             </Form.Item>
           </Col>
+          <Col xl={12} md={12} sm={24}>
+            <Form.Item
+              name={['landmark']}
+              label='Landmark'
+              rules={[
+                {
+                  required: true
+                }
+              ]}
+            >
+              <Input />
+            </Form.Item>
+          </Col>
+          <Col xl={12} md={12} sm={24}>
+            <Form.Item name={['addressLine1']} label='Address Line 1'>
+              <Input.TextArea />
+            </Form.Item>
+          </Col>
+          <Col xl={12} md={12} sm={24}>
+            <Form.Item name={['addressLine2']} label='Address Line 2'>
+              <Input.TextArea />
+            </Form.Item>
+          </Col>
+          <Form.Item wrapperCol={{ offset: 8 }}>
+            <Button type='primary' htmlType='submit'>
+              Submit
+            </Button>
+          </Form.Item>
         </Row>
-
-        <Form.Item
-          name={['user', 'email']}
-          label='Email'
-          rules={[
-            {
-              type: 'email'
-            }
-          ]}
-        >
-          <Input />
-        </Form.Item>
-        <Form.Item
-          name={['user', 'age']}
-          label='Age'
-          rules={[
-            {
-              type: 'number',
-              min: 0,
-              max: 99
-            }
-          ]}
-        >
-          <InputNumber />
-        </Form.Item>
-        <Form.Item name={['user', 'website']} label='Website'>
-          <Input />
-        </Form.Item>
-        <Form.Item name={['user', 'introduction']} label='Introduction'>
-          <Input.TextArea />
-        </Form.Item>
-        <Form.Item wrapperCol={{ offset: 8 }}>
-          <Button type='primary' htmlType='submit'>
-            Submit
-          </Button>
-        </Form.Item>
       </Form>
-    </BasicLayout>
+    </Card>
   )
 }
 

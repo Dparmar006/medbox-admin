@@ -17,7 +17,7 @@ api.interceptors.response.use(
 )
 
 const unauthorziedUserDetected = err => {
-  if (err.response.status === 401) {
+  if (err?.response?.status === 401) {
     window.location.href = '/login'
     message.info('Please re-login.')
     return err
