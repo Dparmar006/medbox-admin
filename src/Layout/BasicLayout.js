@@ -1,23 +1,19 @@
-import { Layout, Menu, Breadcrumb, Space, Typography } from 'antd'
+import { Layout, Row, Menu, Breadcrumb, Space, Avatar, Typography } from 'antd'
 import {
-  DesktopOutlined,
   PieChartOutlined,
-  FileOutlined,
-  TeamOutlined,
-  UserOutlined,
   MedicineBoxOutlined,
   ShopOutlined
 } from '@ant-design/icons'
+import { useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
-import { Link, NavLink } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import './BasicLayout.css'
 
 const { Header, Content, Footer, Sider } = Layout
 const { SubMenu } = Menu
-const { Title } = Typography
 const BasicLayout = props => {
   const [sidebrCollapsed, setSidebarCollapsed] = useState(false)
-
+  const user = useSelector(state => state.auth)
   const onCollapse = () => {
     setSidebarCollapsed(!sidebrCollapsed)
   }
@@ -62,7 +58,16 @@ const BasicLayout = props => {
         </Menu>
       </Sider>
       <Layout className='site-layout'>
-        <Header className='site-layout-background' style={{ padding: 0 }} />
+        <Header
+          className='site-layout-background'
+          style={{ padding: '0 1rem' }}
+        >
+          <Row justify='end' align='middle' style={{ height: '100%' }}>
+            <Avatar style={{ color: '#f56a00', backgroundColor: '#fde3cf' }}>
+              {user?.firstName[0] || 'U'}
+            </Avatar>
+          </Row>
+        </Header>
         <Content style={{ margin: '16px 16px' }}>{props.children}</Content>
         <Footer style={{ textAlign: 'center' }}>
           Medbox ©{new Date().getFullYear()} Created by Dixit
