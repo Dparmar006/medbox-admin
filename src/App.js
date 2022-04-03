@@ -1,13 +1,22 @@
 // import './App.less'
-import React from 'react'
+import React, { useEffect } from 'react'
 import '../node_modules/antd/dist/antd.css'
-import { Button } from 'antd'
+import { Button, message } from 'antd'
 import { routes } from './routes'
 import { USER_TYPES } from './util/constants'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import BasicLayout from './Layout/BasicLayout'
 import PageNotFound from './pages/SystemPages/PageNotFound'
+import { getMedicines } from './redux/medicines'
+import { useDispatch } from 'react-redux'
+
 function App () {
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(getMedicines())
+  }, [])
+
   return (
     <React.Fragment>
       <BrowserRouter>

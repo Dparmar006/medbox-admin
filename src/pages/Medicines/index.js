@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import BasicLayout from '../../Layout/BasicLayout'
 import { Card, message, Row, Col, Divider } from 'antd'
 import api from '../../util/api'
-
+import jwtDecode from 'jwt-decode'
 const Medicines = () => {
   const [medicines, setMedicines] = useState([])
   const [isLoading, setLoading] = useState(true)
@@ -17,8 +16,9 @@ const Medicines = () => {
       setLoading(false)
     }
   }
-
-  useEffect(() => getMedicines(), [])
+  useEffect(() => {
+    getMedicines()
+  }, [])
 
   return (
     <Row gutter={16}>

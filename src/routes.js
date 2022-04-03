@@ -3,6 +3,7 @@ import Register from './pages/Auth/Register'
 import Dashboard from './pages/Dashboard'
 import Medicines from './pages/Medicines'
 import AddMedicines from './pages/Medicines/AddMedicines'
+import MyStore from './pages/MyStore/MyStore'
 import Stores from './pages/Stores'
 import RegisterStores from './pages/Stores/RegisterStores'
 import { USER_TYPES } from './util/constants'
@@ -51,6 +52,11 @@ export const routes = {
       path: '/stores',
       component: <Stores />,
       title: 'Stores'
+    },
+    {
+      path: '/my-store',
+      component: <MyStore />,
+      title: 'My store'
     },
     {
       path: '/register-store',

@@ -53,8 +53,8 @@ const BasicLayout = props => {
               <Link to={'/add-medicines'}>Add Medicines</Link>
             </Menu.Item>
           </SubMenu>
-          <Menu.Item key='9' icon={<FileOutlined />}>
-            My Store
+          <Menu.Item key='9' icon={<ShopOutlined />}>
+            <Link to='/my-store'>My Store</Link>
           </Menu.Item>
           <Menu.Item key='10' icon={<MedicineBoxOutlined />}>
             <Link to='/my-medicines'>My Medicines</Link>
