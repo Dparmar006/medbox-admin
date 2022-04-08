@@ -1,8 +1,9 @@
-import { Layout, Row, Menu, Breadcrumb, Space, Avatar, Typography } from 'antd'
+import { Layout, Row, Menu, Avatar } from 'antd'
 import {
   PieChartOutlined,
   MedicineBoxOutlined,
-  ShopOutlined
+  ShopOutlined,
+  ShoppingCartOutlined
 } from '@ant-design/icons'
 import { useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
@@ -54,6 +55,9 @@ const BasicLayout = props => {
           </Menu.Item>
           <Menu.Item key='10' icon={<MedicineBoxOutlined />}>
             <Link to='/my-medicines'>My Medicines</Link>
+          </Menu.Item>
+          <Menu.Item key='11' icon={<ShoppingCartOutlined />}>
+            <Link to='/billing'>Billing</Link>
           </Menu.Item>
         </Menu>
       </Sider>

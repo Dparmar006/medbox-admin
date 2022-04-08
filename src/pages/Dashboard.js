@@ -1,6 +1,5 @@
 import { Card, Col, Row } from 'antd'
 import React from 'react'
-import BasicLayout from '../Layout/BasicLayout'
 import {
   DollarOutlined,
   MedicineBoxOutlined,

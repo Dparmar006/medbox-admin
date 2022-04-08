@@ -1,8 +1,10 @@
 import Login from './pages/Auth/Login'
 import Register from './pages/Auth/Register'
+import Billing from './pages/Billing'
 import Dashboard from './pages/Dashboard'
 import Medicines from './pages/Medicines'
 import AddMedicines from './pages/Medicines/AddMedicines'
+import UsersMedicines from './pages/Medicines/PharmacistsMedicines'
 import MyStore from './pages/MyStore/MyStore'
 import Stores from './pages/Stores'
 import RegisterStores from './pages/Stores/RegisterStores'
@@ -74,6 +76,18 @@ export const routes = {
       path: '/add-medicines',
       component: <AddMedicines />,
       title: 'Add medicines'
+    },
+    {
+      path: '/my-medicines',
+      component: <UsersMedicines />,
+      title: 'Add medicines'
+    },
+
+    // billing
+    {
+      path: '/billing',
+      component: <Billing />,
+      title: 'Billing'
     }
   ]
 }

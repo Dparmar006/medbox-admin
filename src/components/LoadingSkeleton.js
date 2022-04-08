@@ -1,5 +1,5 @@
-import { Card, Col, Row, Skeleton } from 'antd'
-import React, { useEffect, useMemo } from 'react'
+import { Card, Col } from 'antd'
+import React from 'react'
 
 const LoadingSkeleton = (numberOfCards = 8) => {
   const skeletons = [1, 2, 3, 4, 5, 6, 7, 8]

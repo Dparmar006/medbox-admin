@@ -1,7 +1,6 @@
 import { Card, Col, Divider, message, Row } from 'antd'
 import React, { useEffect, useState } from 'react'
 import LoadingSkeleton from '../../components/LoadingSkeleton'
-import BasicLayout from '../../Layout/BasicLayout'
 import api from '../../util/api'
 
 const Stores = () => {

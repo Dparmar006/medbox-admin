@@ -11,7 +11,6 @@ export const getMedicines = createAsyncThunk(
   'medicines/getMedicines',
   async (values, { getState, fulfillWithValue, rejectWithValue }) => {
     const state = getState()
-    console.log('o=')
     try {
       const response = await api.get('/medicines', { storeId: state.store.id })
       if (response.status === 200) {

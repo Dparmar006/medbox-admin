@@ -1,18 +1,6 @@
 import React from 'react'
-import {
-  Form,
-  Input,
-  InputNumber,
-  Button,
-  Row,
-  Col,
-  Space,
-  message,
-  Card
-} from 'antd'
-import BasicLayout from '../../Layout/BasicLayout'
+import { Form, Input, Button, Row, Col, message, Card } from 'antd'
 import api from '../../util/api'
-import { PlusOutlined } from '@ant-design/icons'
 
 const RegisterStores = () => {
   const [form] = Form.useForm()

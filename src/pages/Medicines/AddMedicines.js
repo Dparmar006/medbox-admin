@@ -2,24 +2,17 @@ import React from 'react'
 import {
   Form,
   Input,
-  InputNumber,
   Button,
   Row,
   Col,
-  Space,
   message,
   Card,
   Select,
   DatePicker,
   Divider
 } from 'antd'
-import BasicLayout from '../../Layout/BasicLayout'
 import api from '../../util/api'
-import {
-  DeleteOutlined,
-  MinusCircleOutlined,
-  PlusOutlined
-} from '@ant-design/icons'
+import { DeleteOutlined, PlusOutlined } from '@ant-design/icons'
 
 const AddMedicines = () => {
   const [form] = Form.useForm()

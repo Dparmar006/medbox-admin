@@ -4,7 +4,6 @@ import { Provider } from 'react-redux'
 import App from './App'
 import { store } from './redux/store'
 import reportWebVitals from './reportWebVitals'
-import Router from './Router'
 
 ReactDOM.render(
   <React.StrictMode>

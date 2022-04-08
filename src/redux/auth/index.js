@@ -1,11 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { USER_TYPES } from '../../util/constants'
 
 const initialState = {
   firstName: '',
   lastName: '',
   email: '',
   token: localStorage.getItem('medbox-token'),
-  role: null
+  role: USER_TYPES.PHARMACIST
 }
 
 export const authSlice = createSlice({

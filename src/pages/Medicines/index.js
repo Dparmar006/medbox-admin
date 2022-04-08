@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Card, message, Row, Col, Divider } from 'antd'
 import api from '../../util/api'
-import jwtDecode from 'jwt-decode'
 const Medicines = () => {
   const [medicines, setMedicines] = useState([])
   const [isLoading, setLoading] = useState(true)
