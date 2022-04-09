@@ -26,7 +26,7 @@ const Stores = () => {
         <LoadingSkeleton />
       ) : (
         stores.map(store => (
-          <Col xl={6} key={store._id}>
+          <Col xl={6} md={8} sm={12} xs={24} key={store._id}>
             <Card style={{ marginTop: 16 }} loading={isLoading}>
               <h3>
                 {store.name} - {store.address.city}

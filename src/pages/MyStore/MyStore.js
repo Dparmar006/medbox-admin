@@ -38,10 +38,10 @@ const MyStore = () => {
             </h4>
           </Col>
         </Row>
-        <Divider orientation='left'>Top 20 medicines</Divider>;
+        <Divider orientation='left'>Top 20 medicines</Divider>
         <Row gutter={16}>
           {medicines.map(medicine => (
-            <Col xl={6} key={medicine._id}>
+            <Col xl={6} md={8} sm={12} xs={24} key={medicine._id}>
               <Card style={{ marginTop: 16 }} loading={isLoading}>
                 <h3>
                   {medicine.name} - <small>{medicine.brandName}</small>
