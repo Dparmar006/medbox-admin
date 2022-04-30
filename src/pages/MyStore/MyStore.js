@@ -13,7 +13,7 @@ const MyStore = () => {
       const res = await api.get('/medicines', {
         storeId: store.id
       })
-      setMedicines(res.data.medicines?.slice(0, 20))
+      setMedicines(res.data?.medicines?.slice(0, 20))
     } catch (err) {
       message.error(err.message)
     } finally {

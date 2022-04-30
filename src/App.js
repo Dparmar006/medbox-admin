@@ -1,6 +1,7 @@
 // import './App.less'
 import React, { useEffect } from 'react'
-import '../node_modules/antd/dist/antd.dark.css'
+// import '../node_modules/antd/dist/antd.dark.css'
+import '../node_modules/antd/dist/antd.css'
 import { message } from 'antd'
 import { routes } from './routes'
 import { USER_TYPES } from './util/constants'
@@ -33,7 +34,7 @@ function App () {
     if (!user?.email) {
       getUser()
     }
-  }, [])
+  }, [user?.email])
 
   useEffect(() => {
     dispatch(getMedicines())

@@ -8,6 +8,19 @@ const Billing = () => {
   const [form] = Form.useForm()
   const { list } = useSelector(state => state.medicines)
 
+  const handleMedicineChange = (_id, key) => {
+    let medicine = list?.find(med => med._id === _id)
+    const oldMeds = form.getFieldValue('medicines')
+    form.setFields({ medicines: (oldMeds[key].price = medicine.price) })
+  }
+  const handleQuantityChange = (quantity = 1, key) => {
+    const oldMeds = form.getFieldValue('medicines')
+    const med = oldMeds?.find(med => med?._id === oldMeds[key].name)
+    form.setFields({
+      medicines: (oldMeds[key].price = med?.price * quantity)
+    })
+  }
+
   return (
     <Row gutter={24}>
       <Col xl={12} md={12} xs={24}>
@@ -59,7 +72,10 @@ const Billing = () => {
                           label='Medicine'
                           rules={[{ required: true }]}
                         >
-                          <Select showSearch>
+                          <Select
+                            onChange={val => handleMedicineChange(val, key)}
+                            showSearch
+                          >
                             {list?.map(medicine => (
                               <Select.Option
                                 key={medicine._id}
@@ -78,8 +94,17 @@ const Billing = () => {
                           label='Quantity'
                           initialValue={1}
                           rules={[{ required: true }]}
+                          validateFirst={true}
                         >
-                          <Input type='number' />
+                          <Input
+                            type='number'
+                            onChange={e =>
+                              handleQuantityChange(
+                                Number(e?.target?.value),
+                                key
+                              )
+                            }
+                          />
                         </Form.Item>
                       </Col>
                       <Col xl={5} xs={8}>
@@ -104,14 +129,18 @@ const Billing = () => {
                   <Row gutter={24}>
                     <Col xl={12} xs={12}>
                       <Form.Item>
-                        <Button block type='primary' onClick={() => add()}>
+                        <Button type='dashed' block onClick={() => add()}>
                           Add Item
                         </Button>
                       </Form.Item>
                     </Col>
                     <Col xl={12} xs={12}>
                       <Form.Item>
-                        <Button block onClick={() => form.resetFields()}>
+                        <Button
+                          type='dashed'
+                          block
+                          onClick={() => form.resetFields()}
+                        >
                           Clear
                         </Button>
                       </Form.Item>
@@ -120,6 +149,15 @@ const Billing = () => {
                 </>
               )}
             </Form.List>
+            <Form.Item>
+              <Button
+                block
+                type='primary'
+                // onClick={() => handleSubmit()}
+              >
+                Generate bill
+              </Button>
+            </Form.Item>
           </Card>
         </Form>
       </Col>
@@ -129,7 +167,7 @@ const Billing = () => {
             Total :{' '}
             {billingInformation
               ?.map(m => m?.price)
-              .reduce((a, b) => Number(a) + Number(b), 0) ?? ''}
+              .reduce((a, b) => Number(a) + Number(b), 0) || ''}
           </Typography.Title>
         </Card>
       </Col>

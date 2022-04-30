@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Card, Row, Col, Divider, Pagination } from 'antd'
 import { useSelector } from 'react-redux'
 const UsersMedicines = () => {

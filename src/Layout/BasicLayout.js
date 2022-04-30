@@ -30,7 +30,7 @@ const BasicLayout = props => {
         <div className='logo'>
           {sidebrCollapsed ? <h2>MB</h2> : <h2>Medbox</h2>}
         </div>
-        <Menu theme='dark' mode='vertical'>
+        <Menu theme='dark' mode='inline'>
           <Menu.Item key='1' icon={<PieChartOutlined />}>
             <Link to={'/'}>Dashboard</Link>
           </Menu.Item>

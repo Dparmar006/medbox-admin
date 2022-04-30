@@ -16,9 +16,9 @@ export const storeSlice = createSlice({
   initialState,
   reducers: {
     setStore: (state, action) => {
-      state.id = action.payload._id
-      state.name = action.payload.name
-      state.address = { ...action.payload.address }
+      state.id = action?.payload?._id
+      state.name = action?.payload?.name
+      state.address = { ...action?.payload?.address }
     }
   }
 })
