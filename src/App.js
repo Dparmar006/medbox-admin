@@ -1,7 +1,7 @@
 // import './App.less'
 import React, { useEffect } from 'react'
 // import '../node_modules/antd/dist/antd.dark.css'
-import '../node_modules/antd/dist/antd.css'
+import '../node_modules/antd/dist/antd.dark.css'
 import { message } from 'antd'
 import { routes } from './routes'
 import { USER_TYPES } from './util/constants'
@@ -14,6 +14,7 @@ import jwtDecode from 'jwt-decode'
 import api from './util/api'
 import { setUser } from './redux/auth'
 import { setStore } from './redux/store/index'
+import { getTransactions } from './redux/transactions'
 function App () {
   const dispatch = useDispatch()
   const user = useSelector(state => state.auth)
@@ -38,6 +39,7 @@ function App () {
 
   useEffect(() => {
     dispatch(getMedicines())
+    dispatch(getTransactions())
   }, [])
 
   return (

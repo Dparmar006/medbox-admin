@@ -23,7 +23,6 @@ const Login = () => {
   const onFinish = async values => {
     try {
       const res = await api.post('/pharmacists/login', values)
-      console.log(res)
       if (res.status === 200) {
         dispatch(setUser(res?.data?.pharmacist))
         dispatch(setStore(res?.data?.store))

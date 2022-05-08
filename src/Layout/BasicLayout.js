@@ -1,4 +1,4 @@
-import { Layout, Row, Menu, Avatar } from 'antd'
+import { Layout, Row, Menu, Avatar, Divider } from 'antd'
 import {
   PieChartOutlined,
   MedicineBoxOutlined,
@@ -7,7 +7,7 @@ import {
 } from '@ant-design/icons'
 import { useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import './BasicLayout.css'
 
 const { Header, Content, Footer, Sider } = Layout
@@ -23,40 +23,41 @@ const BasicLayout = props => {
     document.title = props.title + ' | Medbox' || 'Medbox'
     return () => (document.title = 'Loading')
   }, [props.title])
-
+  const location = useLocation()
   return (
     <Layout style={{ minHeight: '100vh' }}>
       <Sider collapsible collapsed={sidebrCollapsed} onCollapse={onCollapse}>
         <div className='logo'>
           {sidebrCollapsed ? <h2>MB</h2> : <h2>Medbox</h2>}
         </div>
-        <Menu theme='dark' mode='inline'>
-          <Menu.Item key='1' icon={<PieChartOutlined />}>
+        <Menu theme='dark' selectedKeys={[location.pathname]} mode='inline'>
+          <Menu.Item key='/' icon={<PieChartOutlined />}>
             <Link to={'/'}>Dashboard</Link>
           </Menu.Item>
+          <Menu.Item key='/my-store' icon={<ShopOutlined />}>
+            <Link to='/my-store'>My Store</Link>
+          </Menu.Item>
+          <Menu.Item key='/my-medicines' icon={<MedicineBoxOutlined />}>
+            <Link to='/my-medicines'>My Medicines</Link>
+          </Menu.Item>
           <SubMenu key='sub1' icon={<ShopOutlined />} title='Stores'>
-            <Menu.Item key='3'>
+            {/* <Menu.Item key={'/stores'}>
               <Link to={'/stores'}>View Stores</Link>
-            </Menu.Item>
-            <Menu.Item key='4'>
+            </Menu.Item> */}
+            <Menu.Item key={'/register-store'}>
               <Link to={'/register-store'}>Register Store</Link>
             </Menu.Item>
           </SubMenu>
           <SubMenu key='sub2' icon={<MedicineBoxOutlined />} title='Medicines'>
-            <Menu.Item key='6'>
+            {/* <Menu.Item key={'/medicines'}>
               <Link to={'/medicines'}>Medicines</Link>
-            </Menu.Item>
-            <Menu.Item key='8'>
+            </Menu.Item> */}
+            <Menu.Item key={'/add-medicines'}>
               <Link to={'/add-medicines'}>Add Medicines</Link>
             </Menu.Item>
           </SubMenu>
-          <Menu.Item key='9' icon={<ShopOutlined />}>
-            <Link to='/my-store'>My Store</Link>
-          </Menu.Item>
-          <Menu.Item key='10' icon={<MedicineBoxOutlined />}>
-            <Link to='/my-medicines'>My Medicines</Link>
-          </Menu.Item>
-          <Menu.Item key='11' icon={<ShoppingCartOutlined />}>
+
+          <Menu.Item key='/billing' icon={<ShoppingCartOutlined />}>
             <Link to='/billing'>Billing</Link>
           </Menu.Item>
         </Menu>

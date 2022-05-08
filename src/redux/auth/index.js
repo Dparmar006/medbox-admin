@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import { USER_TYPES } from '../../util/constants'
 
 const initialState = {
+  _id: '',
   firstName: '',
   lastName: '',
   email: '',
@@ -14,6 +15,7 @@ export const authSlice = createSlice({
   initialState,
   reducers: {
     setUser: (state, action) => {
+      state._id = action.payload._id
       state.firstName = action.payload.firstName
       state.lastName = action.payload.lastName
       state.email = action.payload.email

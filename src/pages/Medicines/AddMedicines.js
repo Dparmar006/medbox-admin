@@ -13,20 +13,29 @@ import {
 } from 'antd'
 import api from '../../util/api'
 import { DeleteOutlined, PlusOutlined } from '@ant-design/icons'
+import { useDispatch, useSelector } from 'react-redux'
+import { getMedicines } from '../../redux/medicines'
 
 const AddMedicines = () => {
   const [form] = Form.useForm()
-
+  const store = useSelector(state => state.store)
+  const dispatch = useDispatch()
   const onFinish = async values => {
     const { medicines } = values
-
-    console.log(values.medicines)
     if (medicines && medicines.length > 0) {
+      let cookMeds = []
+      medicines.map(meds => {
+        cookMeds.push({
+          ...meds,
+          storeId: store.id
+        })
+      })
       try {
-        const res = await api.post('/medicines', medicines)
+        const res = await api.post('/medicines', cookMeds)
         if (res.status === 201) {
-          message.success(res?.data?.message)
           form.resetFields()
+          dispatch(getMedicines())
+          message.success(res?.data?.message)
         } else {
           message.success(res?.response?.data?.message)
         }

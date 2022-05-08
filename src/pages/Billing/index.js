@@ -1,13 +1,30 @@
 import { MinusCircleOutlined } from '@ant-design/icons'
-import { Button, Card, Col, Form, Input, Row, Select, Typography } from 'antd'
+import {
+  Button,
+  Card,
+  Col,
+  Divider,
+  Form,
+  Input,
+  message,
+  notification,
+  Row,
+  Select,
+  Space,
+  Table,
+  Typography
+} from 'antd'
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
+import api from '../../util/api'
+import { displayDate } from '../../util/funs'
 
 const Billing = () => {
   const [billingInformation, setBillingInfomartion] = useState([])
   const [form] = Form.useForm()
   const { list } = useSelector(state => state.medicines)
-
+  const store = useSelector(state => state.store)
+  const pharmacist = useSelector(state => state.auth)
   const handleMedicineChange = (_id, key) => {
     let medicine = list?.find(med => med._id === _id)
     const oldMeds = form.getFieldValue('medicines')
@@ -20,16 +37,77 @@ const Billing = () => {
       medicines: (oldMeds[key].price = med?.price * quantity)
     })
   }
+  const printInvoice = () => {
+    const invoiceDiv = document.getElementById('invoice').innerHTML
+    const originalPage = document.body.innerHTML
+    document.body.innerHTML = invoiceDiv
+    window.print()
+    document.body.innerHTML = originalPage
+    form.resetFields()
+  }
+
+  const handlePrint = async formData => {
+    try {
+      let cookedData = []
+      if (!formData?.medicines?.length) {
+        return message.error('Please add medicines to generate bill.')
+      }
+      formData?.medicines?.map(med => {
+        console.log(
+          '>>',
+          list.find(l => l._id === med.medicine),
+          'MED',
+          med
+        )
+        let medicine = list.find(l => l._id === med.medicine)
+        cookedData.push({
+          quantity: med.quantity,
+          price: med.price,
+          medicineId: med.medicine,
+          name: medicine.name
+        })
+      })
+      formData.medicines = cookedData
+      formData.storeId = store.id
+
+      const res = await api.post('/transactions', formData)
+      if (res.status !== 201) {
+        return message.error(res.response.data.message)
+      }
+      console.log({ ...res })
+      const key = `${Date.now()}`
+      const printButton = (
+        <Button type='primary' onClick={printInvoice}>
+          Print
+        </Button>
+      )
+      notification.open({
+        message: 'Transaction saved !',
+        type: 'success',
+        description:
+          'Transaction has been saved, Would you like to print the invoice ?',
+        btn: printButton,
+        key,
+        onClose: () => {
+          notification.close(key)
+          form.resetFields()
+        }
+      })
+    } catch (error) {
+      return message.error(error?.response?.data?.message || 'Error')
+    }
+  }
 
   return (
-    <Row gutter={24}>
+    <Row gutter={24} align='stretch'>
       <Col xl={12} md={12} xs={24}>
         <Form
           form={form}
           layout='vertical'
           autoComplete='off'
+          onFinish={handlePrint}
           onFieldsChange={(e, b) => {
-            setBillingInfomartion(form.getFieldsValue().medicines)
+            setBillingInfomartion(form.getFieldsValue())
           }}
         >
           <Card>
@@ -39,6 +117,7 @@ const Billing = () => {
                   name='name'
                   label='Customer name'
                   rules={[{ required: true }]}
+                  help='Full name of the customer'
                 >
                   <Input />
                 </Form.Item>
@@ -80,6 +159,7 @@ const Billing = () => {
                               <Select.Option
                                 key={medicine._id}
                                 value={medicine._id}
+                                medicine={medicine}
                               >
                                 {medicine.name}
                               </Select.Option>
@@ -150,22 +230,58 @@ const Billing = () => {
               )}
             </Form.List>
             <Form.Item>
-              <Button
-                block
-                type='primary'
-                // onClick={() => handleSubmit()}
-              >
+              <Button block type='primary' htmlType='submit'>
                 Generate bill
               </Button>
             </Form.Item>
           </Card>
         </Form>
       </Col>
-      <Col xl={12} md={12} xs={24}>
+      <Col xl={12} md={12} xs={24} id='invoice'>
         <Card>
-          <Typography.Title>
+          <Row>
+            <Col xl={12} md={12} xs={12}>
+              <Typography.Title level={5}>
+                {billingInformation.name || 'Customer name'} <br />
+                {billingInformation.email || 'Customer email'} <br />
+                {displayDate()}
+              </Typography.Title>
+            </Col>
+            <Col xl={12} md={12} xs={12}>
+              <Typography.Title level={5}>
+                {store.name} <br />
+                {`${store.address.landmark}, ${store.address.addressLine1}, ${store.address.addressLine2}, ${store.address.city}`}
+              </Typography.Title>
+            </Col>
+          </Row>
+          <Divider />
+          <Table
+            dataSource={billingInformation.medicines}
+            pagination={false}
+            columns={[
+              {
+                title: 'Item',
+                dataIndex: 'medicine',
+                render: (value, record) => {
+                  let medicine = list?.find(med => med._id === value)
+                  return medicine?.name || ''
+                },
+                width: '50%'
+              },
+              {
+                title: 'Quantity',
+                dataIndex: 'quantity'
+              },
+              {
+                title: 'Price',
+                dataIndex: 'price'
+              }
+            ]}
+          />
+          <div style={{ padding: '.4rem' }} />
+          <Typography.Title level={4}>
             Total :{' '}
-            {billingInformation
+            {billingInformation?.medicines
               ?.map(m => m?.price)
               .reduce((a, b) => Number(a) + Number(b), 0) || ''}
           </Typography.Title>
