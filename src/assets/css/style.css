@@ -1,0 +1,19 @@
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.full-height {
+  min-height: 100vh;
+}
+.half-height {
+  min-height: 50vh;
+}
+
+.half-width {
+  min-width: 50vh;
+}
+.full-width {
+  min-width: 100vw;
+}

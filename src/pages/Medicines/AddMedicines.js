@@ -15,6 +15,7 @@ import api from '../../util/api'
 import { DeleteOutlined, PlusOutlined } from '@ant-design/icons'
 import { useDispatch, useSelector } from 'react-redux'
 import { getMedicines } from '../../redux/medicines'
+import { DEFAULT_GUTTER } from '../../util/constants'
 
 const AddMedicines = () => {
   const [form] = Form.useForm()
@@ -78,7 +79,7 @@ const AddMedicines = () => {
                     {'  '}
                     <DeleteOutlined color='red' onClick={() => remove(name)} />
                   </Divider>
-                  <Row gutter={24}>
+                  <Row gutter={DEFAULT_GUTTER}>
                     <Col md={12} xs={24} xl={12}>
                       <Form.Item
                         {...rest}
@@ -222,7 +223,7 @@ const AddMedicines = () => {
                   </Row>
                 </>
               ))}
-              <Row gutter={24} style={{ marginTop: '1rem' }}>
+              <Row gutter={DEFAULT_GUTTER} style={{ marginTop: '1rem' }}>
                 <Col xl={12} md={24} xs={24}>
                   <Form.Item>
                     <Button

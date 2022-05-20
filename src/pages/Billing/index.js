@@ -17,6 +17,7 @@ import {
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import api from '../../util/api'
+import { DEFAULT_GUTTER } from '../../util/constants'
 import { displayDate } from '../../util/funs'
 
 const Billing = () => {
@@ -99,7 +100,7 @@ const Billing = () => {
   }
 
   return (
-    <Row gutter={24} align='stretch'>
+    <Row gutter={DEFAULT_GUTTER} align='stretch'>
       <Col xl={12} md={12} xs={24}>
         <Form
           form={form}
@@ -111,7 +112,7 @@ const Billing = () => {
           }}
         >
           <Card>
-            <Row gutter={12}>
+            <Row gutter={DEFAULT_GUTTER}>
               <Col xl={12} xs={12}>
                 <Form.Item
                   name='name'
@@ -143,7 +144,7 @@ const Billing = () => {
               {(fields, { add, remove }) => (
                 <>
                   {fields.map(({ key, name, ...restField }) => (
-                    <Row gutter={12} key={key}>
+                    <Row gutter={DEFAULT_GUTTER} key={key}>
                       <Col xl={13} xs={8}>
                         <Form.Item
                           {...restField}
@@ -206,7 +207,7 @@ const Billing = () => {
                       </Col>
                     </Row>
                   ))}
-                  <Row gutter={24}>
+                  <Row gutter={DEFAULT_GUTTER}>
                     <Col xl={12} xs={12}>
                       <Form.Item>
                         <Button type='dashed' block onClick={() => add()}>

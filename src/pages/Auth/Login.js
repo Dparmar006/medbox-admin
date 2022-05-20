@@ -36,17 +36,18 @@ const Login = () => {
   }
 
   return (
-    <Row align='middle' justify='space-between'>
-      <Col span={6} offset={8} style={{ marginTop: '12rem' }}>
-        <Card>
-          <Form
-            name='normal_login'
-            className='login-form'
-            initialValues={{
-              remember: true
-            }}
-            onFinish={onFinish}
-          >
+    <Row justify='center' align='middle' className='full-height'>
+      <Form
+        name='normal_login'
+        className='login-form half-width'
+        style={{ padding: '2rem' }}
+        initialValues={{
+          remember: true
+        }}
+        onFinish={onFinish}
+      >
+        <Row>
+          <Col xs={24}>
             <Form.Item
               name='email'
               rules={[
@@ -61,6 +62,8 @@ const Login = () => {
                 placeholder='Email'
               />
             </Form.Item>
+          </Col>
+          <Col xs={24}>
             <Form.Item
               name='password'
               rules={[
@@ -76,16 +79,15 @@ const Login = () => {
                 placeholder='Password'
               />
             </Form.Item>
+          </Col>
+          <Col xs={24}>
             <Form.Item>
               <Form.Item name='remember' valuePropName='checked' noStyle>
                 <Checkbox>Remember me</Checkbox>
               </Form.Item>
-
-              {/* <a className='login-form-forgot' href=''>
-              Forgot password
-            </a> */}
             </Form.Item>
-
+          </Col>
+          <Col xs={24}>
             <Form.Item>
               <Space>
                 <Button
@@ -98,9 +100,9 @@ const Login = () => {
                 Or <Link to='/register'> register now!</Link>
               </Space>
             </Form.Item>
-          </Form>
-        </Card>
-      </Col>
+          </Col>
+        </Row>
+      </Form>
     </Row>
   )
 }

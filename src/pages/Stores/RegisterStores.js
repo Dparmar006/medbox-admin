@@ -1,6 +1,7 @@
 import React from 'react'
 import { Form, Input, Button, Row, Col, message, Card } from 'antd'
 import api from '../../util/api'
+import { DEFAULT_GUTTER } from '../../util/constants'
 
 const RegisterStores = () => {
   const [form] = Form.useForm()
@@ -20,15 +21,15 @@ const RegisterStores = () => {
   }
 
   return (
-    <Card style={{ width: '80%', margin: 'auto' }}>
+    <Card style={{ margin: 'auto' }}>
       <Form name='add-medicine-form' onFinish={onFinish} layout='vertical'>
         <Row
-          gutter={'12'}
-          style={{ height: '100%', padding: '2rem' }}
-          justify='start'
-          align='middle'
+          gutter={DEFAULT_GUTTER}
+          style={{ height: '100%' }}
+          // justify='space-between'
+          // align='middle'
         >
-          <Col xl={12} md={12} sm={24}>
+          <Col xl={12} md={24} xs={24}>
             <Form.Item
               name={['name']}
               label='Name'
@@ -41,7 +42,7 @@ const RegisterStores = () => {
               <Input />
             </Form.Item>
           </Col>
-          <Col xl={12} md={12} sm={24}>
+          <Col xl={12} md={12} xs={24}>
             <Form.Item
               name={['city']}
               label='City'
@@ -54,7 +55,7 @@ const RegisterStores = () => {
               <Input />
             </Form.Item>
           </Col>
-          <Col xl={12} md={12} sm={24}>
+          <Col xl={12} md={12} xs={24}>
             <Form.Item
               name={['landmark']}
               label='Landmark'
@@ -67,21 +68,23 @@ const RegisterStores = () => {
               <Input />
             </Form.Item>
           </Col>
-          <Col xl={12} md={12} sm={24}>
+          <Col xl={12} md={12} xs={24}>
             <Form.Item name={['addressLine1']} label='Address Line 1'>
               <Input.TextArea />
             </Form.Item>
           </Col>
-          <Col xl={12} md={12} sm={24}>
+          <Col xl={12} md={24} xs={24}>
             <Form.Item name={['addressLine2']} label='Address Line 2'>
               <Input.TextArea />
             </Form.Item>
           </Col>
-          <Form.Item wrapperCol={{ offset: 8 }}>
-            <Button type='primary' htmlType='submit'>
-              Submit
-            </Button>
-          </Form.Item>
+          <Col xl={12} md={24} xs={24}>
+            <Form.Item>
+              <Button type='primary' htmlType='submit'>
+                Submit
+              </Button>
+            </Form.Item>
+          </Col>
         </Row>
       </Form>
     </Card>

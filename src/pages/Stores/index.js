@@ -2,6 +2,7 @@ import { Card, Col, Divider, message, Row } from 'antd'
 import React, { useEffect, useState } from 'react'
 import LoadingSkeleton from '../../components/LoadingSkeleton'
 import api from '../../util/api'
+import { DEFAULT_GUTTER } from '../../util/constants'
 
 const Stores = () => {
   const [stores, setStores] = useState([])
@@ -21,7 +22,7 @@ const Stores = () => {
   useEffect(() => getStores(), [])
 
   return (
-    <Row gutter={16}>
+    <Row gutter={DEFAULT_GUTTER}>
       {isLoading ? (
         <LoadingSkeleton />
       ) : (

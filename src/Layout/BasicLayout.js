@@ -13,7 +13,7 @@ import './BasicLayout.css'
 const { Header, Content, Footer, Sider } = Layout
 const { SubMenu } = Menu
 const BasicLayout = props => {
-  const [sidebrCollapsed, setSidebarCollapsed] = useState(false)
+  const [sidebrCollapsed, setSidebarCollapsed] = useState(true)
   const user = useSelector(state => state.auth)
   const onCollapse = () => {
     setSidebarCollapsed(!sidebrCollapsed)
@@ -73,10 +73,19 @@ const BasicLayout = props => {
             </Avatar>
           </Row>
         </Header>
-        <Content style={{ margin: '16px 16px' }}>{props.children}</Content>
-        <Footer style={{ textAlign: 'center' }}>
+        <Content
+          style={{
+            margin: '.5rem',
+            height: 'calc(100vh - 6rem)',
+            overflowY: 'auto',
+            overflowX: 'hidden'
+          }}
+        >
+          {props.children}
+        </Content>
+        {/* <Footer style={{ textAlign: 'center' }}>
           Medbox ©{new Date().getFullYear()} Created by Dixit
-        </Footer>
+        </Footer> */}
       </Layout>
     </Layout>
   )

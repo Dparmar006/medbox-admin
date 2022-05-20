@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Card, message, Row, Col, Divider } from 'antd'
 import api from '../../util/api'
+import { DEFAULT_GUTTER } from '../../util/constants'
 const Medicines = () => {
   const [medicines, setMedicines] = useState([])
   const [isLoading, setLoading] = useState(true)
@@ -20,10 +21,10 @@ const Medicines = () => {
   }, [])
 
   return (
-    <Row gutter={16}>
+    <Row gutter={DEFAULT_GUTTER}>
       {medicines.map(medicine => (
         <Col xl={6} md={8} sm={12} xs={24} key={medicine._id}>
-          <Card style={{ marginTop: 16 }} loading={isLoading}>
+          <Card loading={isLoading}>
             <h3>
               {medicine.name} - <small>{medicine.brandName}</small>
             </h3>

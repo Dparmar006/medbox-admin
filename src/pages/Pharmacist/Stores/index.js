@@ -1,5 +1,6 @@
 import { Card, Col, Divider, message, Row } from 'antd'
 import React, { useEffect, useState } from 'react'
+import { DEFAULT_GUTTER } from '../../../util/constants'
 import BasicLayout from '../../Layout/BasicLayout'
 import api from '../../util/api'
 
@@ -22,7 +23,7 @@ const Stores = () => {
 
   return (
     <BasicLayout>
-      <Row gutter={16}>
+      <Row gutter={DEFAULT_GUTTER}>
         {stores.map(store => (
           <Col xl={6} key={store._id}>
             <Card style={{ marginTop: 16 }} loading={isLoading}>

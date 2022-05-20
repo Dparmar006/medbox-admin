@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import BasicLayout from '../Layout/BasicLayout'
 import { Card, message, Row, Col, Divider } from 'antd'
 import api from '../../../util/api'
+import { DEFAULT_GUTTER } from '../../../util/constants'
 
 const Medicines = () => {
   const [medicines, setMedicines] = useState([])
@@ -22,7 +23,7 @@ const Medicines = () => {
 
   return (
     <BasicLayout>
-      <Row gutter={16}>
+      <Row gutter={DEFAULT_GUTTER}>
         {medicines.map(medicine => (
           <Col xl={6} key={medicine._id}>
             <Card style={{ marginTop: 16 }} loading={isLoading}>

@@ -8,6 +8,7 @@ import {
 } from '@ant-design/icons'
 import { useSelector } from 'react-redux'
 import { displayDate } from '../util/funs'
+import { DEFAULT_GUTTER } from '../util/constants'
 
 const Dashboard = () => {
   const medicines = useSelector(state => state.medicines)
@@ -44,10 +45,10 @@ const Dashboard = () => {
     setSales(totalSales)
   }, [])
   return (
-    <Row gutter={24} justify='space-between'>
+    <Row gutter={DEFAULT_GUTTER} justify='space-between'>
       {dashboardCards.map(card => {
         return (
-          <Col xl={6} md={12} xs={24} style={{ marginBottom: '1rem' }}>
+          <Col xl={6} md={12} xs={12}>
             <Card style={{ width: '100%' }}>
               <Card.Meta
                 title={card.title}
@@ -59,7 +60,7 @@ const Dashboard = () => {
         )
       })}
 
-      <Col xl={12} md={24} sm={24}>
+      <Col xl={12} md={24} sm={24} xs={24}>
         <Typography.Title level={2}>Transactions</Typography.Title>
         <Table
           columns={[
@@ -88,7 +89,7 @@ const Dashboard = () => {
         />
       </Col>
 
-      <Col xl={12} md={24} sm={24}>
+      <Col xl={12} md={24} sm={24} xs={24}>
         <Typography.Title level={2}>Medicines</Typography.Title>
         <Table
           columns={[

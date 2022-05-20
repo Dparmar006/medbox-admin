@@ -3,6 +3,7 @@ import { render } from 'less'
 import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import api from '../../util/api'
+import { DEFAULT_GUTTER } from '../../util/constants'
 
 const MyStore = () => {
   // const [medicines, setMedicines] = useState([])
@@ -71,10 +72,10 @@ const MyStore = () => {
           </Col>
         </Row>
         <Divider orientation='left'>Top 8 medicines</Divider>
-        <Row gutter={16}>
+        <Row gutter={DEFAULT_GUTTER}>
           {medicines.list.map(medicine => (
             <Col xl={6} md={8} sm={12} xs={24} key={medicine._id}>
-              <Card style={{ marginTop: 16 }} loading={isLoading}>
+              <Card loading={isLoading}>
                 <h3>
                   {medicine.name} - <small>{medicine.brandName}</small>
                 </h3>
