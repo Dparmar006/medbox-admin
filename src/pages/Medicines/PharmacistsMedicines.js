@@ -7,10 +7,10 @@ const UsersMedicines = () => {
 
   return (
     <React.Fragment>
-      <Row gutter={DEFAULT_GUTTER}>
+      <Row gutter={DEFAULT_GUTTER} align='stretch'>
         {list?.map(medicine => (
           <Col xl={6} md={8} sm={12} xs={24} key={medicine._id}>
-            <Card style={{ marginTop: 16 }}>
+            <Card>
               <h3>
                 {medicine.name} - <small>{medicine.brandName}</small>
               </h3>

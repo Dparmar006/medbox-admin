@@ -63,7 +63,8 @@ function App () {
         {routes[0].map(route => {
           return <Route path={route.path} element={route.component} />
         })}
-        <Route path='/404' component={<PageNotFound />} />
+        <Route path='/404' element={<PageNotFound />} />
+        <Route path='/*' element={<PageNotFound />} />
       </Routes>
       {/* </BrowserRouter> */}
     </React.Fragment>
