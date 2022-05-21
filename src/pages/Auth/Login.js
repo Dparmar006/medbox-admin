@@ -11,18 +11,19 @@ import {
   message
 } from 'antd'
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
-import api from '../../util/api'
+import api, { BASE_URL } from '../../util/api'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { setUser } from '../../redux/auth'
 import { setStore } from '../../redux/store/index'
+import axios from 'axios'
 
 const Login = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const onFinish = async values => {
     try {
-      const res = await api.post('/pharmacists/login', values)
+      const res = await axios.post(BASE_URL + '/pharmacists/login', values)
       if (res.status === 200) {
         dispatch(setUser(res?.data?.pharmacist))
         dispatch(setStore(res?.data?.store))

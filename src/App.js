@@ -50,9 +50,10 @@ function App () {
     <React.Fragment>
       {/* <BrowserRouter> */}
       <Routes>
-        {routes[USER_TYPES.PHARMACIST].map(route => {
+        {routes[USER_TYPES.PHARMACIST].map((route, inx) => {
           return (
             <Route
+              key={inx}
               path={route.path}
               element={
                 <BasicLayout title={route.title}>{route.component}</BasicLayout>
@@ -60,8 +61,8 @@ function App () {
             />
           )
         })}
-        {routes[0].map(route => {
-          return <Route path={route.path} element={route.component} />
+        {routes[0].map((route, inx) => {
+          return <Route key={inx} path={route.path} element={route.component} />
         })}
         <Route path='/404' element={<PageNotFound />} />
         <Route path='/*' element={<PageNotFound />} />

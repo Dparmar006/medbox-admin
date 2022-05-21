@@ -46,14 +46,14 @@ const Dashboard = () => {
   }, [])
   return (
     <Row gutter={DEFAULT_GUTTER} justify='space-between'>
-      {dashboardCards.map(card => {
+      {dashboardCards.map((card, i) => {
         return (
-          <Col xl={6} md={12} xs={12}>
+          <Col xl={6} md={12} xs={12} key={i}>
             <Card style={{ width: '100%' }}>
               <Card.Meta
                 title={card.title}
                 avatar={<h2>{card.icon}</h2>}
-                description={card.value}
+                description={card.value || '0'}
               />
             </Card>
           </Col>

@@ -1,4 +1,4 @@
-import { Layout, Row, Menu, Avatar, Divider } from 'antd'
+import { Layout, Row, Menu, Avatar, Divider, Dropdown } from 'antd'
 import {
   PieChartOutlined,
   MedicineBoxOutlined,
@@ -6,9 +6,10 @@ import {
   ShoppingCartOutlined
 } from '@ant-design/icons'
 import { useSelector } from 'react-redux'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import './BasicLayout.css'
+import { logout } from '../util/funs'
 
 const { Header, Content, Footer, Sider } = Layout
 const { SubMenu } = Menu
@@ -18,6 +19,53 @@ const BasicLayout = props => {
   const onCollapse = () => {
     setSidebarCollapsed(!sidebrCollapsed)
   }
+
+  const avatarMenu = useMemo(() => {
+    return (
+      <>
+        <Menu>
+          <Menu.Item onClick={logout}>Logout</Menu.Item>
+        </Menu>
+        <Menu
+          items={[
+            {
+              label: (
+                <a
+                  target='_blank'
+                  rel='noopener noreferrer'
+                  href='https://www.antgroup.com'
+                >
+                  1st menu item
+                </a>
+              )
+            },
+            {
+              label: (
+                <a
+                  target='_blank'
+                  rel='noopener noreferrer'
+                  href='https://www.aliyun.com'
+                >
+                  2nd menu item
+                </a>
+              )
+            },
+            {
+              label: (
+                <a
+                  target='_blank'
+                  rel='noopener noreferrer'
+                  href='https://www.luohanacademy.com'
+                >
+                  3rd menu item
+                </a>
+              )
+            }
+          ]}
+        />
+      </>
+    )
+  }, [])
 
   useEffect(() => {
     document.title = props.title + ' | Medbox' || 'Medbox'
@@ -68,9 +116,11 @@ const BasicLayout = props => {
           style={{ padding: '0 1rem' }}
         >
           <Row justify='end' align='middle' style={{ height: '100%' }}>
-            <Avatar style={{ color: '#f56a00', backgroundColor: '#fde3cf' }}>
-              {user?.firstName[0] || 'U'}
-            </Avatar>
+            <Dropdown overlay={avatarMenu} placement='bottomLeft' arrow>
+              <Avatar style={{ color: '#f56a00', backgroundColor: '#fde3cf' }}>
+                {user ? user?.firstName?.[0] : 'U'}
+              </Avatar>
+            </Dropdown>
           </Row>
         </Header>
         <Content

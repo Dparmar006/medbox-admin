@@ -1,4 +1,14 @@
-import { Card, Col, Divider, message, Row, Table, Tag, Typography } from 'antd'
+import {
+  Card,
+  Col,
+  Divider,
+  Empty,
+  message,
+  Row,
+  Table,
+  Tag,
+  Typography
+} from 'antd'
 import { render } from 'less'
 import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
@@ -64,7 +74,9 @@ const MyStore = () => {
             <Typography.Title>{store.name}</Typography.Title>
           </Col>
           <Col xl={12} md={12} xs={24}>
-            <h3>{`${store.address.landmark}, ${store.address.addressLine1}, ${store.address.addressLine2}, ${store.address.city}`}</h3>
+            <h3>{`${store?.address?.landmark || 'Your'}, ${store.address
+              .addressLine1 || 'Address'}, ${store.address.addressLine2 ||
+              'Will be'}, ${store.address.city || 'Here'}`}</h3>
 
             <h4>
               {`${user.firstName} ${user.lastName}`} - <i> {user.email} </i>
@@ -73,27 +85,33 @@ const MyStore = () => {
         </Row>
         <Divider orientation='left'>Top 8 medicines</Divider>
         <Row gutter={DEFAULT_GUTTER}>
-          {medicines.list.map(medicine => (
-            <Col xl={6} md={8} sm={12} xs={24} key={medicine._id}>
-              <Card loading={isLoading}>
-                <h3>
-                  {medicine.name} - <small>{medicine.brandName}</small>
-                </h3>
-                <p>
-                  ₹ {medicine.price} / {medicine.unit}
-                </p>
-                <Divider />
-                <h5>
-                  Quantity Available : {medicine.quantityAvailabe}{' '}
-                  {medicine.unit}
-                </h5>
-                <h5>
-                  Quantity Imported : {medicine.quantityImported}{' '}
-                  {medicine.unit}
-                </h5>
-              </Card>
+          {medicines.list.length === 0 ? (
+            <Col xl={24} xs={24}>
+              <Empty />
             </Col>
-          ))}
+          ) : (
+            medicines.list.map(medicine => (
+              <Col xl={6} md={8} sm={12} xs={24} key={medicine._id}>
+                <Card loading={isLoading}>
+                  <h3>
+                    {medicine.name} - <small>{medicine.brandName}</small>
+                  </h3>
+                  <p>
+                    ₹ {medicine.price} / {medicine.unit}
+                  </p>
+                  <Divider />
+                  <h5>
+                    Quantity Available : {medicine.quantityAvailabe}{' '}
+                    {medicine.unit}
+                  </h5>
+                  <h5>
+                    Quantity Imported : {medicine.quantityImported}{' '}
+                    {medicine.unit}
+                  </h5>
+                </Card>
+              </Col>
+            ))
+          )}
         </Row>
         <Divider orientation='left'>Transactions</Divider>
         <Table

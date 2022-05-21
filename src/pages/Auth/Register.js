@@ -11,16 +11,23 @@ import {
   message
 } from 'antd'
 import { UserOutlined, LockOutlined, PhoneOutlined } from '@ant-design/icons'
-import api from '../../util/api'
+import api, { BASE_URL } from '../../util/api'
 import { Link, useNavigate } from 'react-router-dom'
 import { DEFAULT_GUTTER } from '../../util/constants'
+import axios from 'axios'
+import { setUser } from '../../redux/auth'
+import { useDispatch } from 'react-redux'
+import { setStore } from '../../redux/store/index'
 
 const Register = () => {
   const navigate = useNavigate()
+  const dispatch = useDispatch()
   const onFinish = async values => {
     try {
-      const res = await api.post('/pharmacists', values)
+      const res = await axios.post(BASE_URL + '/pharmacists', values)
       if (res.status === 201) {
+        dispatch(setUser(res?.data?.pharmacist))
+        dispatch(setStore(null))
         localStorage.setItem('medbox-token', res.data.pharmacist.token)
         return navigate('/')
       }
@@ -110,7 +117,7 @@ const Register = () => {
             </Col>{' '}
             <Col xl={12} xs={24}>
               <Form.Item
-                name='phone'
+                name='phoneNumber'
                 rules={[
                   {
                     required: false,

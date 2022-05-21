@@ -11,8 +11,9 @@ export const getTransactions = createAsyncThunk(
   'transactions/getTransactions',
   async (values, { getState, fulfillWithValue, rejectWithValue }) => {
     const state = getState()
+    if (!state.store.id) return null
     try {
-      const response = await api.get('/transactions', {
+      const response = await api.post('/transactions', {
         storeId: state.store.id
       })
       if (response.status === 200) {
@@ -29,16 +30,22 @@ export const getTransactions = createAsyncThunk(
 export const transactionsSlice = createSlice({
   name: 'transactions',
   initialState,
+  reducers: {
+    removeTransactions: (state, action) => {
+      state.totalTransactions = 0
+      state.list = []
+    }
+  },
   extraReducers: builder => {
     builder.addCase(getTransactions.fulfilled, (state, action) => {
-      state.list = [...action.payload.transactions]
-      state.totalTransactions = action.payload.totalTransactions
+      state.list = action.payload?.transactions || []
+      state.totalTransactions = action.payload?.totalTransactions || 0
     })
     builder.addCase(getTransactions.rejected, (state, action) => {
-      state.list = []
       state.totaltransactions = 0
+      state.list = []
     })
   }
 })
-
+export const { removeTransactions } = transactionsSlice.actions
 export default transactionsSlice.reducer

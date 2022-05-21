@@ -11,6 +11,7 @@ export const getMedicines = createAsyncThunk(
   'medicines/getMedicines',
   async (values, { getState, fulfillWithValue, rejectWithValue }) => {
     const state = getState()
+    if (!state.store.id) return null
     try {
       const response = await api.get('/medicines', { storeId: state.store.id })
       if (response.status === 200) {
@@ -27,10 +28,16 @@ export const getMedicines = createAsyncThunk(
 export const medicinesSlice = createSlice({
   name: 'medicines',
   initialState,
+  reducers: {
+    removeMedicines: (state, action) => {
+      state.list = []
+      state.totalMedicines = 0
+    }
+  },
   extraReducers: builder => {
     builder.addCase(getMedicines.fulfilled, (state, action) => {
-      state.list = [...action.payload.medicines]
-      state.totalMedicines = action.payload.totalMedicines
+      state.list = action.payload?.medicines || []
+      state.totalMedicines = action.payload?.totalMedicines || 0
     })
     builder.addCase(getMedicines.rejected, (state, action) => {
       state.list = []
@@ -38,5 +45,5 @@ export const medicinesSlice = createSlice({
     })
   }
 })
-
+export const { removeMedicines } = medicinesSlice.actions
 export default medicinesSlice.reducer
