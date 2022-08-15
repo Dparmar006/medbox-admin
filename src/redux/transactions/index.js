@@ -11,7 +11,7 @@ export const getTransactions = createAsyncThunk(
   'transactions/getTransactions',
   async (values, { getState, fulfillWithValue, rejectWithValue }) => {
     const state = getState()
-    if (!state.store._id) return null
+    if (!state.store._id) return rejectWithValue(null)
     try {
       const response = await api.get('/transactions', {
         storeId: state.store._id

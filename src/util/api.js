@@ -1,7 +1,7 @@
 import { message } from 'antd'
 import axios from 'axios'
-export const BASE_URL = 'http://localhost:3001'
-// export const BASE_URL = 'https://medbox-backend.herokuapp.com'
+// export const BASE_URL = 'http://localhost:3001'
+export const BASE_URL = 'https://medbox-backend.herokuapp.com'
 
 const api = axios.create({
   baseURL: BASE_URL,
