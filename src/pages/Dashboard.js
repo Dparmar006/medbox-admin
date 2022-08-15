@@ -6,13 +6,16 @@ import {
   ShopOutlined,
   TeamOutlined
 } from '@ant-design/icons'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { displayDate } from '../util/funs'
 import { DEFAULT_GUTTER } from '../util/constants'
+import { getMedicines } from '../redux/medicines'
+import { getTransactions } from '../redux/transactions'
 
 const Dashboard = () => {
   const medicines = useSelector(state => state.medicines)
   const transactions = useSelector(state => state.transactions)
+  const dispatch = useDispatch()
   const [sales, setSales] = useState(0)
   const dashboardCards = [
     {
@@ -38,12 +41,17 @@ const Dashboard = () => {
   ]
 
   useEffect(() => {
+    dispatch(getMedicines())
+    dispatch(getTransactions())
+  }, [])
+
+  useEffect(() => {
     let totalSales = 0
     transactions.list.map(a => {
       totalSales += a.total
     })
     setSales(totalSales)
-  }, [])
+  }, [transactions])
   return (
     <Row gutter={DEFAULT_GUTTER} justify='space-between'>
       {dashboardCards.map((card, i) => {
@@ -92,6 +100,7 @@ const Dashboard = () => {
       <Col xl={12} md={24} sm={24} xs={24}>
         <Typography.Title level={2}>Medicines</Typography.Title>
         <Table
+          loading={medicines.isLoading}
           columns={[
             {
               title: 'Medicine name',

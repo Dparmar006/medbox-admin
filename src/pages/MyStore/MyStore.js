@@ -1,58 +1,21 @@
-import {
-  Card,
-  Col,
-  Divider,
-  Empty,
-  message,
-  Row,
-  Table,
-  Tag,
-  Typography
-} from 'antd'
-import { render } from 'less'
-import React, { useState, useEffect } from 'react'
+import { Card, Col, Divider, Empty, Row, Table, Tag, Typography } from 'antd'
+import React, { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { useSelector } from 'react-redux'
-import api from '../../util/api'
+import { getMedicines } from '../../redux/medicines'
 import { DEFAULT_GUTTER } from '../../util/constants'
 
 const MyStore = () => {
-  // const [medicines, setMedicines] = useState([])
-  // const [transactions, setTransactions] = useState([])
+  const dispatch = useDispatch()
   const [isLoading, setLoading] = useState(false)
   const store = useSelector(state => state.store)
   const medicines = useSelector(state => state.medicines)
   const user = useSelector(state => state.auth)
   const transactions = useSelector(state => state.transactions)
 
-  // const getMedicines = async () => {
-  //   try {
-  //     const res = await api.get('/medicines', {
-  //       storeId: store.id
-  //     })
-  //     setMedicines(res.data?.medicines?.slice(0, 8))
-  //   } catch (err) {
-  //     message.error(err.message)
-  //   } finally {
-  //     setLoading(false)
-  //   }
-  // }
-
-  // const getTransactions = async () => {
-  //   try {
-  //     const res = await api.get('/transactions', {
-  //       storeId: store.id
-  //     })
-  //     setTransactions(res.data?.transactions)
-  //   } catch (err) {
-  //     message.error(err.message)
-  //   } finally {
-  //     setLoading(false)
-  //   }
-  // }
-
-  // useEffect(() => getMedicines(), [])
-
-  // useEffect(() => getTransactions(), [])
+  useEffect(() => {
+    dispatch(getMedicines())
+  }, [])
 
   const expandedMedicines = data => {
     const columns = [{ title: 'Name', dataIndex: 'name', key: 'name' }]

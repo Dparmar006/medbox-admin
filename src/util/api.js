@@ -1,22 +1,22 @@
 import { message } from 'antd'
 import axios from 'axios'
-import { store } from '../redux/store'
-// export const BASE_URL = 'http://localhost:3001'
-export const BASE_URL = 'https://medbox-backend.herokuapp.com'
+export const BASE_URL = 'http://localhost:3001'
+// export const BASE_URL = 'https://medbox-backend.herokuapp.com'
 
 const api = axios.create({
   baseURL: BASE_URL,
   headers: {
-    'x-access-token': store.getState().auth.token
+    'x-access-token': localStorage.getItem('medbox-token')
   }
 })
 
 api.interceptors.request.use(
   request => {
-    if (request.headers['x-access-token']) {
-      return request
+    request.headers = {
+      ...request.headers,
+      'x-access-token': localStorage.getItem('medbox-token')
     }
-    return message.info('Please re-login.')
+    return request
   },
   error => unauthorziedUserDetected(error)
 )
@@ -34,9 +34,9 @@ const unauthorziedUserDetected = err => {
       window.location.href = '/login'
     }
     message.info('Please re-login.')
-    return err
+    return Promise.reject(err)
   }
-  return err
+  return Promise.reject(err)
 }
 
 export default api

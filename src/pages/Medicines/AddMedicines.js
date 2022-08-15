@@ -28,7 +28,7 @@ const AddMedicines = () => {
       medicines.map(meds => {
         cookMeds.push({
           ...meds,
-          storeId: store.id
+          storeId: store._id
         })
       })
       try {

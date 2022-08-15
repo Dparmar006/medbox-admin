@@ -17,6 +17,8 @@ import { useDispatch } from 'react-redux'
 import { setUser } from '../../redux/auth'
 import { setStore } from '../../redux/store/index'
 import axios from 'axios'
+import { getMedicines } from '../../redux/medicines'
+import { getTransactions } from '../../redux/transactions'
 
 const Login = () => {
   const dispatch = useDispatch()
@@ -25,9 +27,12 @@ const Login = () => {
     try {
       const res = await axios.post(BASE_URL + '/pharmacists/login', values)
       if (res.status === 200) {
+        localStorage.setItem('medbox-user', JSON.stringify(res.data.pharmacist))
+        localStorage.setItem('medbox-store', JSON.stringify(res.data.store))
+        localStorage.setItem('medbox-token', res.data.pharmacist.token)
         dispatch(setUser(res?.data?.pharmacist))
         dispatch(setStore(res?.data?.store))
-        localStorage.setItem('medbox-token', res.data.pharmacist.token)
+
         return navigate('/')
       }
       message.error(res.data.msg)

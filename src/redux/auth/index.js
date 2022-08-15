@@ -7,7 +7,8 @@ const initialState = {
   lastName: '',
   email: '',
   token: localStorage.getItem('medbox-token'),
-  role: USER_TYPES.PHARMACIST
+  role: USER_TYPES.PHARMACIST,
+  ...JSON.parse(localStorage.getItem('medbox-user'))
 }
 
 export const authSlice = createSlice({

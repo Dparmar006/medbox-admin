@@ -56,6 +56,16 @@ const RegisterStores = () => {
             </Form.Item>
           </Col>
           <Col xl={12} md={12} xs={24}>
+            <Form.Item name={['addressLine1']} label='Address Line 1'>
+              <Input.TextArea />
+            </Form.Item>
+          </Col>
+          <Col xl={12} md={24} xs={24}>
+            <Form.Item name={['addressLine2']} label='Address Line 2'>
+              <Input.TextArea />
+            </Form.Item>
+          </Col>
+          <Col xl={12} md={12} xs={24}>
             <Form.Item
               name={['landmark']}
               label='Landmark'
@@ -68,24 +78,13 @@ const RegisterStores = () => {
               <Input />
             </Form.Item>
           </Col>
-          <Col xl={12} md={12} xs={24}>
-            <Form.Item name={['addressLine1']} label='Address Line 1'>
-              <Input.TextArea />
-            </Form.Item>
-          </Col>
-          <Col xl={12} md={24} xs={24}>
-            <Form.Item name={['addressLine2']} label='Address Line 2'>
-              <Input.TextArea />
-            </Form.Item>
-          </Col>
-          <Col xl={12} md={24} xs={24}>
-            <Form.Item>
-              <Button type='primary' htmlType='submit'>
-                Submit
-              </Button>
-            </Form.Item>
-          </Col>
+          <Col xl={12} md={24} xs={24}></Col>
         </Row>
+        <Form.Item>
+          <Button type='primary' htmlType='submit'>
+            Submit
+          </Button>
+        </Form.Item>
       </Form>
     </Card>
   )

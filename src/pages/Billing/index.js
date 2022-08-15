@@ -25,7 +25,7 @@ const Billing = () => {
   const [form] = Form.useForm()
   const { list } = useSelector(state => state.medicines)
   const store = useSelector(state => state.store)
-  const pharmacist = useSelector(state => state.auth)
+
   const handleMedicineChange = (_id, key) => {
     let medicine = list?.find(med => med._id === _id)
     const oldMeds = form.getFieldValue('medicines')
@@ -38,28 +38,13 @@ const Billing = () => {
       medicines: (oldMeds[key].price = med?.price * quantity)
     })
   }
-  const printInvoice = () => {
-    const invoiceDiv = document.getElementById('invoice').innerHTML
-    const originalPage = document.body.innerHTML
-    document.body.innerHTML = invoiceDiv
-    window.print()
-    document.body.innerHTML = originalPage
-    form.resetFields()
-  }
-
-  const handlePrint = async formData => {
+  const handleSubmit = async formData => {
     try {
       let cookedData = []
       if (!formData?.medicines?.length) {
         return message.error('Please add medicines to generate bill.')
       }
       formData?.medicines?.map(med => {
-        console.log(
-          '>>',
-          list.find(l => l._id === med.medicine),
-          'MED',
-          med
-        )
         let medicine = list.find(l => l._id === med.medicine)
         cookedData.push({
           quantity: med.quantity,
@@ -69,33 +54,18 @@ const Billing = () => {
         })
       })
       formData.medicines = cookedData
-      formData.storeId = store.id
+      formData.storeId = store._id
 
       const res = await api.post('/transactions', formData)
-      if (res.status !== 201) {
-        return message.error(res.response.data.message)
+      if (res.status === 201) {
+        form.resetFields()
+        setBillingInfomartion([])
+        return message.info(res.data.message)
       }
-      console.log({ ...res })
-      const key = `${Date.now()}`
-      const printButton = (
-        <Button type='primary' onClick={printInvoice}>
-          Print
-        </Button>
-      )
-      notification.open({
-        message: 'Transaction saved !',
-        type: 'success',
-        description:
-          'Transaction has been saved, Would you like to print the invoice ?',
-        btn: printButton,
-        key,
-        onClose: () => {
-          notification.close(key)
-          form.resetFields()
-        }
-      })
+      message.error(res.data.message)
     } catch (error) {
-      return message.error(error?.response?.data?.message || 'Error')
+      console.log(error)
+      return message.error(error?.response?.data?.message || error?.message)
     }
   }
 
@@ -106,7 +76,7 @@ const Billing = () => {
           form={form}
           layout='vertical'
           autoComplete='off'
-          onFinish={handlePrint}
+          onFinish={handleSubmit}
           onFieldsChange={(e, b) => {
             setBillingInfomartion(form.getFieldsValue())
           }}

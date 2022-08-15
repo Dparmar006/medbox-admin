@@ -1,14 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-  id: '',
+  _id: '',
   name: '',
   address: {
     city: '',
     addressLine1: '',
     addressLine2: '',
     landmark: ''
-  }
+  },
+  ...JSON.parse(localStorage.getItem('medbox-store'))
 }
 
 export const storeSlice = createSlice({

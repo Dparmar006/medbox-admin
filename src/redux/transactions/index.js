@@ -11,10 +11,10 @@ export const getTransactions = createAsyncThunk(
   'transactions/getTransactions',
   async (values, { getState, fulfillWithValue, rejectWithValue }) => {
     const state = getState()
-    if (!state.store.id) return null
+    if (!state.store._id) return null
     try {
-      const response = await api.post('/transactions', {
-        storeId: state.store.id
+      const response = await api.get('/transactions', {
+        storeId: state.store._id
       })
       if (response.status === 200) {
         return fulfillWithValue(response.data)
