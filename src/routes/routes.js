@@ -1,6 +1,7 @@
 import Login from '../pages/Auth/Login'
 import Register from '../pages/Auth/Register'
 import Billing from '../pages/Billing'
+import Chat from '../pages/Chat'
 import Dashboard from '../pages/Dashboard'
 import Medicines from '../pages/Medicines'
 import AddMedicines from '../pages/Medicines/AddMedicines'
@@ -88,6 +89,12 @@ export const routes = {
       path: '/billing',
       component: <Billing />,
       title: 'Billing'
+    },
+    // billing
+    {
+      path: '/chat',
+      component: <Chat />,
+      title: 'Chat'
     }
   ]
 }

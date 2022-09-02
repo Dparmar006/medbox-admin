@@ -3,7 +3,8 @@ import {
   PieChartOutlined,
   MedicineBoxOutlined,
   ShopOutlined,
-  ShoppingCartOutlined
+  ShoppingCartOutlined,
+  MessageOutlined
 } from '@ant-design/icons'
 import { useSelector } from 'react-redux'
 import { useEffect, useMemo, useState } from 'react'
@@ -14,7 +15,7 @@ import { logout } from '../util/funs'
 const { Header, Content, Footer, Sider } = Layout
 const { SubMenu } = Menu
 const BasicLayout = props => {
-  const [sidebrCollapsed, setSidebarCollapsed] = useState(true)
+  const [sidebrCollapsed, setSidebarCollapsed] = useState(false)
   const user = useSelector(state => state.auth)
   const onCollapse = () => {
     setSidebarCollapsed(!sidebrCollapsed)
@@ -97,9 +98,6 @@ const BasicLayout = props => {
             </Menu.Item>
           </SubMenu>
           <SubMenu key='sub2' icon={<MedicineBoxOutlined />} title='Medicines'>
-            {/* <Menu.Item key={'/medicines'}>
-              <Link to={'/medicines'}>Medicines</Link>
-            </Menu.Item> */}
             <Menu.Item key={'/add-medicines'}>
               <Link to={'/add-medicines'}>Add Medicines</Link>
             </Menu.Item>
@@ -107,6 +105,9 @@ const BasicLayout = props => {
 
           <Menu.Item key='/billing' icon={<ShoppingCartOutlined />}>
             <Link to='/billing'>Billing</Link>
+          </Menu.Item>
+          <Menu.Item key='/chat' icon={<MessageOutlined />}>
+            <Link to='/chat'>Chat</Link>
           </Menu.Item>
         </Menu>
       </Sider>

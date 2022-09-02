@@ -5,6 +5,14 @@ export const USER_TYPES = {
 }
 
 export const DEFAULT_GUTTER = [
-  { xs: 4, sm: 8, md: 12, xl: 16 },
-  { xs: 4, sm: 8, md: 12, xl: 16 }
+  { xs: 4, sm: 6, md: 12, lg: 16, xl: 18, xxl: 24 },
+  { xs: 4, sm: 6, md: 12, lg: 16, xl: 18, xxl: 24 }
 ]
+
+export const BACKEND_BASE_URL = 'http://localhost:3001'
+
+export const SOCKET = {
+  CONNECTION: 'connection',
+  SEND_MESSAGE: 'SEND_MESSAGE',
+  RECIEVE_MESSAGE: 'RECIEVE_MESSAGE'
+}

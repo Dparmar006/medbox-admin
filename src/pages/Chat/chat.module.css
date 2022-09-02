@@ -1,0 +1,9 @@
+.container {
+    max-height: 74vh;
+    min-height: 74vh;
+    overflow-y: scroll;
+}
+
+.container::-webkit-scrollbar{
+    display: none;
+}
