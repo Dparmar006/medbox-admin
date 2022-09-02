@@ -4,6 +4,7 @@ import storeReducer from './store/'
 import medicineReducer from './medicines/'
 import transactionsReducer from './transactions/'
 import chatReducer from './chat/'
+import pharmacistsReducer from './pharmacists/'
 
 export const store = configureStore({
   reducer: {
@@ -11,6 +12,7 @@ export const store = configureStore({
     store: storeReducer,
     medicines: medicineReducer,
     transactions: transactionsReducer,
-    chat: chatReducer
+    chat: chatReducer,
+    pharmacists: pharmacistsReducer
   }
 })
