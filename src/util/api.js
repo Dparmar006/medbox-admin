@@ -1,10 +1,8 @@
 import { message } from 'antd'
 import axios from 'axios'
-// export const BASE_URL = 'http://localhost:3001'
-export const BASE_URL = 'https://medbox-backend.herokuapp.com'
-
+import { BACKEND_BASE_URL } from './constants'
 const api = axios.create({
-  baseURL: BASE_URL,
+  baseURL: BACKEND_BASE_URL,
   headers: {
     'x-access-token': localStorage.getItem('medbox-token')
   }

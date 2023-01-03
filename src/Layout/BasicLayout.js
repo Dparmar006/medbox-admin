@@ -85,22 +85,16 @@ const BasicLayout = props => {
           <Menu.Item key='/my-store' icon={<ShopOutlined />}>
             <Link to='/my-store'>My Store</Link>
           </Menu.Item>
-          <Menu.Item key='/my-medicines' icon={<MedicineBoxOutlined />}>
-            <Link to='/my-medicines'>My Medicines</Link>
-          </Menu.Item>
-          <SubMenu key='sub1' icon={<ShopOutlined />} title='Stores'>
-            {/* <Menu.Item key={'/stores'}>
-              <Link to={'/stores'}>View Stores</Link>
-            </Menu.Item> */}
+          {/* <SubMenu key='sub1' icon={<ShopOutlined />} title='Stores'>
             <Menu.Item key={'/register-store'}>
               <Link to={'/register-store'}>Register Store</Link>
             </Menu.Item>
-          </SubMenu>
-          <SubMenu key='sub2' icon={<MedicineBoxOutlined />} title='Medicines'>
-            {/* <Menu.Item key={'/medicines'}>
-              <Link to={'/medicines'}>Medicines</Link>
-            </Menu.Item> */}
-            <Menu.Item key={'/add-medicines'}>
+          </SubMenu> */}
+          <SubMenu key='sub2' icon={<MedicineBoxOutlined />} title='Medicines'>        
+            <Menu.Item key='/my-medicines'>
+            <Link to='/my-medicines'>My Medicines</Link>
+          </Menu.Item>
+          <Menu.Item key={'/add-medicines'}>
               <Link to={'/add-medicines'}>Add Medicines</Link>
             </Menu.Item>
           </SubMenu>

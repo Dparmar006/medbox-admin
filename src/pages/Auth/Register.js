@@ -11,9 +11,8 @@ import {
   message
 } from 'antd'
 import { UserOutlined, LockOutlined, PhoneOutlined } from '@ant-design/icons'
-import api, { BASE_URL } from '../../util/api'
 import { Link, useNavigate } from 'react-router-dom'
-import { DEFAULT_GUTTER } from '../../util/constants'
+import { BACKEND_BASE_URL, DEFAULT_GUTTER } from '../../util/constants'
 import axios from 'axios'
 import { setUser } from '../../redux/auth'
 import { useDispatch } from 'react-redux'
@@ -24,7 +23,7 @@ const Register = () => {
   const dispatch = useDispatch()
   const onFinish = async values => {
     try {
-      const res = await axios.post(BASE_URL + '/pharmacists', values)
+      const res = await axios.post(BACKEND_BASE_URL + '/pharmacists', values)
       if (res.status === 201) {
         dispatch(setUser(res?.data?.pharmacist))
         dispatch(setStore(null))
@@ -41,7 +40,6 @@ const Register = () => {
     <Row align='middle' justify='space-between'>
       <Card>
         <Form
-          // style={{ padding: '2rem' }}
           name='normal_login'
           className='login-form'
           initialValues={{

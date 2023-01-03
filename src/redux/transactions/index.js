@@ -4,7 +4,8 @@ import api from '../../util/api'
 
 const initialState = {
   totalTransactions: 0,
-  list: []
+  list: [],
+  isLoading: false,
 }
 
 export const getTransactions = createAsyncThunk(
@@ -37,13 +38,18 @@ export const transactionsSlice = createSlice({
     }
   },
   extraReducers: builder => {
+    builder.addCase(getTransactions.pending, (state, action) => {
+      state.isLoading = true
+    })
     builder.addCase(getTransactions.fulfilled, (state, action) => {
       state.list = action.payload?.transactions || []
       state.totalTransactions = action.payload?.totalTransactions || 0
+      state.isLoading = false
     })
     builder.addCase(getTransactions.rejected, (state, action) => {
-      state.totaltransactions = 0
+      state.totalTransactions = 0
       state.list = []
+      state.isLoading = false
     })
   }
 })

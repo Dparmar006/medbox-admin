@@ -1,3 +1,5 @@
+export const BACKEND_BASE_URL = process.env.REACT_APP_BACKEND_BASE_URL
+
 export const USER_TYPES = {
   ADMIN: 1,
   PHARMACIST: 2,

@@ -3,11 +3,11 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useSelector } from 'react-redux'
 import { getMedicines } from '../../redux/medicines'
+import { getTransactions } from '../../redux/transactions'
 import { DEFAULT_GUTTER } from '../../util/constants'
 
 const MyStore = () => {
   const dispatch = useDispatch()
-  const [isLoading, setLoading] = useState(false)
   const store = useSelector(state => state.store)
   const medicines = useSelector(state => state.medicines)
   const user = useSelector(state => state.auth)
@@ -15,6 +15,7 @@ const MyStore = () => {
 
   useEffect(() => {
     dispatch(getMedicines())
+    dispatch(getTransactions())
   }, [])
 
   const expandedMedicines = data => {
@@ -48,14 +49,14 @@ const MyStore = () => {
         </Row>
         <Divider orientation='left'>Top 8 medicines</Divider>
         <Row gutter={DEFAULT_GUTTER}>
-          {medicines.list.length === 0 ? (
+          {!medicines.isLoading && medicines.list.length === 0 ? (
             <Col xl={24} xs={24}>
-              <Empty />
+              <Empty  />
             </Col>
           ) : (
             medicines.list.map(medicine => (
               <Col xl={6} md={8} sm={12} xs={24} key={medicine._id}>
-                <Card loading={isLoading}>
+                <Card loading={medicines.isLoading}>
                   <h3>
                     {medicine.name} - <small>{medicine.brandName}</small>
                   </h3>
@@ -78,6 +79,7 @@ const MyStore = () => {
         </Row>
         <Divider orientation='left'>Transactions</Divider>
         <Table
+        loading={transactions.isLoading}
           columns={[
             {
               title: 'Customer',

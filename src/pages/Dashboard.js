@@ -11,6 +11,7 @@ import { displayDate } from '../util/funs'
 import { DEFAULT_GUTTER } from '../util/constants'
 import { getMedicines } from '../redux/medicines'
 import { getTransactions } from '../redux/transactions'
+import { Link } from 'react-router-dom'
 
 const Dashboard = () => {
   const medicines = useSelector(state => state.medicines)
@@ -21,22 +22,26 @@ const Dashboard = () => {
     {
       icon: <ShopOutlined />,
       title: 'Transactions',
-      value: transactions.totalTransactions
+      value: transactions.totalTransactions,
+      url: '/billing'
     },
     {
       icon: <DollarOutlined />,
       title: 'Sales',
-      value: 'Rs. ' + sales
+      value: 'Rs. ' + sales,
+      url: '/billing'
     },
     {
       icon: <MedicineBoxOutlined />,
       title: 'Medicines',
-      value: medicines.totalMedicines
+      value: medicines.totalMedicines,
+      url: '/my-medicines'
     },
     {
       icon: <TeamOutlined />,
       title: 'Pharmacists',
-      value: 87
+      value: 87,
+      url: '/my-medicines'
     }
   ]
 
@@ -57,107 +62,114 @@ const Dashboard = () => {
       {dashboardCards.map((card, i) => {
         return (
           <Col xl={6} md={12} xs={12} key={i}>
-            <Card style={{ width: '100%' }}>
-              <Card.Meta
-                title={card.title}
-                avatar={<h2>{card.icon}</h2>}
-                description={card.value || '0'}
-              />
-            </Card>
+            <Link to={card.url}>
+              <Card style={{ width: '100%' }}>
+                <Card.Meta
+                  title={card.title}
+                  avatar={<h2>{card.icon}</h2>}
+                  description={card.value || '0'}
+                />
+              </Card>
+            </Link>
           </Col>
         )
       })}
 
       <Col xl={12} md={24} sm={24} xs={24}>
-        <Typography.Title level={2}>Transactions</Typography.Title>
-        <Table
-          columns={[
-            {
-              title: 'Customer',
-              dataIndex: 'customerName',
-              key: 'customerName'
-            },
-            {
-              title: 'Medicines',
-              dataIndex: ['medicines'],
-              render: value => {
-                return value.map(obj => (
-                  <Tag color='blue' key={obj.name}>
-                    {obj.name}
-                  </Tag>
-                ))
+        <Card>
+          <Typography.Title level={3}>Last transactions</Typography.Title>
+          <Table
+          loading={transactions.isLoading}
+            columns={[
+              {
+                title: 'Customer',
+                dataIndex: 'customerName',
+                key: 'customerName'
+              },
+              {
+                title: 'Medicines',
+                dataIndex: ['medicines'],
+                render: value => {
+                  return value.map(obj => (
+                    <Tag color='blue' key={obj.name}>
+                      {obj.name}
+                    </Tag>
+                  ))
+                }
+              },
+              {
+                title: 'Total',
+                dataIndex: 'total'
               }
-            },
-            {
-              title: 'Total',
-              dataIndex: 'total'
-            }
-          ]}
-          dataSource={transactions.list}
-        />
+            ]}
+            dataSource={transactions.list}
+          />
+        </Card>
       </Col>
 
       <Col xl={12} md={24} sm={24} xs={24}>
-        <Typography.Title level={2}>Medicines</Typography.Title>
-        <Table
-          loading={medicines.isLoading}
-          columns={[
-            {
-              title: 'Medicine name',
-              dataIndex: 'name',
-              key: 'customerName'
-            },
-            {
-              title: 'Available',
-              dataIndex: 'quantityAvailable',
-              sortOrder: 'descend',
-              defaultSortOrder: 'descend',
-              render: (value, record) => {
-                let message =
-                  'Expiration date is yet to come, no need to worry.'
-                let color = 'blue'
+        <Card>
+          <Typography.Title level={3}>Medicines</Typography.Title>
+          <Table
+            loading={medicines.isLoading}
+            columns={[
+              {
+                title: 'Medicine name',
+                dataIndex: 'name',
+                key: 'customerName'
+              },
+              {
+                title: 'Available',
+                dataIndex: 'quantityAvailable',
+                sortOrder: 'descend',
+                defaultSortOrder: 'descend',
+                render: (value, record) => {
+                  let message =
+                    'Expiration date is yet to come, no need to worry.'
+                  let color = 'blue'
 
-                if (record.quantityThreshhold > record.quantityAvailable) {
-                  message = `Stock is running out, (It's less than ${record.quantityThreshhold})`
-                  color = 'red'
-                } else if (
-                  record.quantityThreshhold > record.quantityAvailable
-                ) {
-                  message = `Stock has been expired, (Expiration date was ${displayDate(
-                    new Date(record.expDate)
-                  )})`
-                } else if (
-                  record.quantityThreshhold >
-                  record.quantityAvailable + record.dateThreshhold
-                ) {
-                  message = `Stock has been expired, (Expiration date was ${displayDate(
-                    new Date(record.expDate)
-                  )})`
+                  if (record.quantityThreshhold > record.quantityAvailable) {
+                    message = `Stock is running out, (It's less than ${record.quantityThreshhold})`
+                    color = 'red'
+                  } else if (
+                    record.quantityThreshhold > record.quantityAvailable
+                  ) {
+                    message = `Stock has been expired, (Expiration date was ${displayDate(
+                      new Date(record.expDate)
+                    )})`
+                  } else if (
+                    record.quantityThreshhold >
+                    record.quantityAvailable + record.dateThreshhold
+                  ) {
+                    message = `Stock has been expired, (Expiration date was ${displayDate(
+                      new Date(record.expDate)
+                    )})`
+                  }
+
+                  if (new Date().toISOString() > record.expDate) {
+                    message = `Stock has been expired, (Expiration date was ${displayDate(
+                      new Date(record.expDate)
+                    )})`
+                    color = 'red'
+                  }
+
+                  return (
+                    <Tooltip title={message}>
+                      <Tag color={color} key={value}>
+                        {value}
+                      </Tag>
+                    </Tooltip>
+                  )
                 }
-
-                if (new Date().toISOString() > record.expDate) {
-                  message = `Stock has been expired, (Expiration date was ${displayDate(
-                    new Date(record.expDate)
-                  )})`
-                  color = 'red'
-                }
-
-                return (
-                  <Tooltip title={message}>
-                    <Tag color={color} key={value}>
-                      {value}
-                    </Tag>
-                  </Tooltip>
-                )
+              },
+              {
+                title: 'Imported',
+                dataIndex: 'quantityImported'
               }
-            },
-            {
-              title: 'Imported',
-              dataIndex: 'quantityImported'
-            }
-          ]}
-          dataSource={medicines?.list}
-        />
+            ]}
+            dataSource={medicines?.list}
+          />
+        </Card>
       </Col>
     </Row>
   )
