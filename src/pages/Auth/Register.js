@@ -32,7 +32,7 @@ const Register = () => {
       }
       message.error(res.data.msg)
     } catch (err) {
-      message.error('Email or Password is wrong, Please try again.')
+      message.error(err?.response?.data?.message || 'Email or Password is wrong, Please try again.')
     }
   }
 
