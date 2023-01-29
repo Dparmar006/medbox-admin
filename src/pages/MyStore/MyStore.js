@@ -2,9 +2,11 @@ import { Card, Col, Divider, Empty, Row, Table, Tag, Typography } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 import { getMedicines } from '../../redux/medicines'
 import { getTransactions } from '../../redux/transactions'
 import { DEFAULT_GUTTER } from '../../util/constants'
+import RegisterStores from '../Stores/RegisterStores'
 
 const MyStore = () => {
   const dispatch = useDispatch()
@@ -30,7 +32,11 @@ const MyStore = () => {
     )
   }
 
-  return (
+  return !store._id ? (
+    <React.Fragment>
+      <RegisterStores />
+    </React.Fragment>
+  ) : (
     <React.Fragment>
       <Card>
         <Row>
@@ -38,9 +44,11 @@ const MyStore = () => {
             <Typography.Title>{store.name}</Typography.Title>
           </Col>
           <Col xl={12} md={12} xs={24}>
-            <h3>{`${store?.address?.landmark || 'Your'}, ${store.address
-              .addressLine1 || 'Address'}, ${store.address.addressLine2 ||
-              'Will be'}, ${store.address.city || 'Here'}`}</h3>
+            <h3>{`${store?.address?.landmark || 'Your'}, ${
+              store.address.addressLine1 || 'Address'
+            }, ${store.address.addressLine2 || 'Will be'}, ${
+              store.address.city || 'Here'
+            }`}</h3>
 
             <h4>
               {`${user.firstName} ${user.lastName}`} - <i> {user.email} </i>
@@ -51,7 +59,14 @@ const MyStore = () => {
         <Row gutter={DEFAULT_GUTTER}>
           {!medicines.isLoading && medicines.list.length === 0 ? (
             <Col xl={24} xs={24}>
-              <Empty  />
+              <Empty
+                description={
+                  <Typography.Title level={4}>
+                    No medicines available, Please{' '}
+                    <Link to={'/add-medicines'}>Add medicines</Link>
+                  </Typography.Title>
+                }
+              />
             </Col>
           ) : (
             medicines.list.map(medicine => (
@@ -79,7 +94,7 @@ const MyStore = () => {
         </Row>
         <Divider orientation='left'>Transactions</Divider>
         <Table
-        loading={transactions.isLoading}
+          loading={transactions.isLoading}
           columns={[
             {
               title: 'Customer',
