@@ -16,11 +16,13 @@ import { DeleteOutlined, PlusOutlined } from '@ant-design/icons'
 import { useDispatch, useSelector } from 'react-redux'
 import { getMedicines } from '../../redux/medicines'
 import { DEFAULT_GUTTER } from '../../util/constants'
+import { useNavigate } from 'react-router-dom'
 
 const AddMedicines = () => {
   const [form] = Form.useForm()
   const store = useSelector(state => state.store)
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const onFinish = async values => {
     const { medicines } = values
     if (medicines && medicines.length > 0) {
@@ -37,6 +39,7 @@ const AddMedicines = () => {
           form.resetFields()
           dispatch(getMedicines())
           message.success(res?.data?.message)
+          navigate("/my-medicines")
         } else {
           message.success(res?.response?.data?.message)
         }

@@ -5,7 +5,7 @@ import { store } from '../redux/store'
 import { removeTransactions } from '../redux/transactions'
 
 export const displayDate = (date = new Date(), separator = '/') => {
-  return `${date.getDate()} ${separator} ${date.getMonth()} ${separator} 
+  return `${date.getDate()} ${separator} ${date.getMonth() + 1} ${separator} 
   ${date.getFullYear()}`
 }
 
