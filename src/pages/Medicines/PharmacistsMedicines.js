@@ -25,7 +25,7 @@ const UsersMedicines = () => {
                   </p>
                   <Divider />
                   <h5>
-                    Quantity Available : {medicine.quantityAvailabe}{' '}
+                    Quantity Available : {medicine.quantityAvailable}{' '}
                     {medicine.unit}
                   </h5>
                   <h5>

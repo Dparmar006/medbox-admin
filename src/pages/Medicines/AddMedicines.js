@@ -55,7 +55,7 @@ const AddMedicines = () => {
     <Card style={{ margin: 'auto' }}>
       <Form
         name='nest-messages'
-        initialValues={{ quantityThreshhold: 20 }}
+        initialValues={{ quantityThreshhold: 20, medicines: [{}] }}
         onFinish={onFinish}
         layout='vertical'
       >
@@ -235,7 +235,7 @@ const AddMedicines = () => {
                       block
                       icon={<PlusOutlined />}
                     >
-                      Add medicine
+                      Add more medicine
                     </Button>
                   </Form.Item>
                 </Col>

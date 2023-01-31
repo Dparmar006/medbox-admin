@@ -12,6 +12,7 @@ import { DEFAULT_GUTTER } from '../util/constants'
 import { getMedicines } from '../redux/medicines'
 import { getTransactions } from '../redux/transactions'
 import { Link } from 'react-router-dom'
+import dayjs from 'dayjs'
 
 const Dashboard = () => {
   const medicines = useSelector(state => state.medicines)
@@ -57,6 +58,53 @@ const Dashboard = () => {
     })
     setSales(totalSales)
   }, [transactions])
+
+  const medicineStatus = medicine => {
+    if (medicine.quantityAvailable < 1) {
+      return {
+        message: 'We do not have this item.',
+        color: 'red'
+      }
+    }
+
+    if (dayjs().isAfter(dayjs(medicine.expDate))) {
+      return {
+        message: `Stock has been expired, (Expiration date was ${displayDate(
+          medicine.expDate
+        )})`,
+        color: 'red'
+      }
+    }
+
+    if (
+      dayjs().isAfter(
+        dayjs(medicine.expDate).subtract(medicine.dateThreshhold, 'day')
+      )
+    ) {
+      return {
+        message: `Stock is running out, (Expiration date was ${displayDate(
+          medicine.expDate
+        )})`,
+        color: 'yellow'
+      }
+    }
+
+    if (medicine.quantityAvailable <= medicine.quantityThreshhold) {
+      return {
+        message: `Stock is running out, (${medicine.quantityAvailable} ${medicine.unit} left) `,
+        color:
+          medicine.quantityAvailable <
+          Math.floor(medicine.quantityThreshhold / 2)
+            ? 'red'
+            : 'yellow'
+      }
+    }
+
+    return {
+      message: 'Everything is good',
+      color: 'green'
+    }
+  }
   return (
     <Row gutter={DEFAULT_GUTTER} justify='space-between'>
       {dashboardCards.map((card, i) => {
@@ -75,11 +123,49 @@ const Dashboard = () => {
         )
       })}
 
+
+
+      <Col xl={12} md={24} sm={24} xs={24}>
+        <Card>
+          <Typography.Title level={3}>Medicines</Typography.Title>
+          <Table
+            loading={medicines.isLoading}
+            columns={[
+              {
+                title: 'Medicine name',
+                dataIndex: 'name',
+                key: 'customerName'
+              },
+              {
+                title: 'Available',
+                dataIndex: 'quantityAvailable',
+                sortOrder: 'descend',
+                defaultSortOrder: 'descend',
+                render: (value, record) => {
+                  const { message, color } = medicineStatus(record)
+                  return (
+                    <Tooltip title={message}>
+                      <Tag color={color} key={value}>
+                        {value}
+                      </Tag>
+                    </Tooltip>
+                  )
+                }
+              },
+              {
+                title: 'Imported',
+                dataIndex: 'quantityImported'
+              }
+            ]}
+            dataSource={medicines?.list}
+          />
+        </Card>
+      </Col>
       <Col xl={12} md={24} sm={24} xs={24}>
         <Card>
           <Typography.Title level={3}>Last transactions</Typography.Title>
           <Table
-          loading={transactions.isLoading}
+            loading={transactions.isLoading}
             columns={[
               {
                 title: 'Customer',
@@ -103,71 +189,6 @@ const Dashboard = () => {
               }
             ]}
             dataSource={transactions.list}
-          />
-        </Card>
-      </Col>
-
-      <Col xl={12} md={24} sm={24} xs={24}>
-        <Card>
-          <Typography.Title level={3}>Medicines</Typography.Title>
-          <Table
-            loading={medicines.isLoading}
-            columns={[
-              {
-                title: 'Medicine name',
-                dataIndex: 'name',
-                key: 'customerName'
-              },
-              {
-                title: 'Available',
-                dataIndex: 'quantityAvailable',
-                sortOrder: 'descend',
-                defaultSortOrder: 'descend',
-                render: (value, record) => {
-                  let message =
-                    'Expiration date is yet to come, no need to worry.'
-                  let color = 'blue'
-
-                  if (record.quantityThreshhold > record.quantityAvailable) {
-                    message = `Stock is running out, (It's less than ${record.quantityThreshhold})`
-                    color = 'red'
-                  } else if (
-                    record.quantityThreshhold > record.quantityAvailable
-                  ) {
-                    message = `Stock has been expired, (Expiration date was ${displayDate(
-                      new Date(record.expDate)
-                    )})`
-                  } else if (
-                    record.quantityThreshhold >
-                    record.quantityAvailable + record.dateThreshhold
-                  ) {
-                    message = `Stock has been expired, (Expiration date was ${displayDate(
-                      new Date(record.expDate)
-                    )})`
-                  }
-
-                  if (new Date().toISOString() > record.expDate) {
-                    message = `Stock has been expired, (Expiration date was ${displayDate(
-                      new Date(record.expDate)
-                    )})`
-                    color = 'red'
-                  }
-
-                  return (
-                    <Tooltip title={message}>
-                      <Tag color={color} key={value}>
-                        {value}
-                      </Tag>
-                    </Tooltip>
-                  )
-                }
-              },
-              {
-                title: 'Imported',
-                dataIndex: 'quantityImported'
-              }
-            ]}
-            dataSource={medicines?.list}
           />
         </Card>
       </Col>

@@ -1,5 +1,5 @@
 import { Card, Col, Divider, Empty, Row, Table, Tag, Typography } from 'antd'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
@@ -80,7 +80,7 @@ const MyStore = () => {
                   </p>
                   <Divider />
                   <h5>
-                    Quantity Available : {medicine.quantityAvailabe}{' '}
+                    Quantity Available : {medicine.quantityAvailable}{' '}
                     {medicine.unit}
                   </h5>
                   <h5>

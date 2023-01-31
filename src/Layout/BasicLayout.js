@@ -1,4 +1,4 @@
-import { Layout, Row, Menu, Avatar, Divider, Dropdown } from 'antd'
+import { Layout, Row, Menu, Avatar,  Dropdown } from 'antd'
 import {
   PieChartOutlined,
   MedicineBoxOutlined,
@@ -11,7 +11,7 @@ import { Link, useLocation } from 'react-router-dom'
 import './BasicLayout.css'
 import { logout } from '../util/funs'
 
-const { Header, Content, Footer, Sider } = Layout
+const { Header, Content,  Sider } = Layout
 const { SubMenu } = Menu
 const BasicLayout = props => {
   const [sidebrCollapsed, setSidebarCollapsed] = useState(true)

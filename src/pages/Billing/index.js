@@ -7,10 +7,8 @@ import {
   Form,
   Input,
   message,
-  notification,
   Row,
   Select,
-  Space,
   Table,
   Typography
 } from 'antd'
@@ -76,6 +74,7 @@ const Billing = () => {
           form={form}
           layout='vertical'
           autoComplete='off'
+          initialValues={{medicines: [{}]}}
           onFinish={handleSubmit}
           onFieldsChange={(e, b) => {
             setBillingInfomartion(form.getFieldsValue())
@@ -233,7 +232,7 @@ const Billing = () => {
               {
                 title: 'Item',
                 dataIndex: 'medicine',
-                render: (value, record) => {
+                render: (value) => {
                   let medicine = list?.find(med => med._id === value)
                   return medicine?.name || ''
                 },
@@ -245,7 +244,10 @@ const Billing = () => {
               },
               {
                 title: 'Price',
-                dataIndex: 'price'
+                dataIndex: 'price',
+                render: (value) => {
+                  return value || '-'
+                },
               }
             ]}
           />

@@ -3,10 +3,10 @@ import { removeMedicines } from '../redux/medicines'
 import { removeStore } from '../redux/store/index'
 import { store } from '../redux/store'
 import { removeTransactions } from '../redux/transactions'
+import dayjs from 'dayjs'
 
-export const displayDate = (date = new Date(), separator = '/') => {
-  return `${date.getDate()} ${separator} ${date.getMonth() + 1} ${separator} 
-  ${date.getFullYear()}`
+export const displayDate = (date = new Date(), format = "DD MMM YYYY") => {
+  return dayjs(date).format(format)
 }
 
 export const logout = () => {

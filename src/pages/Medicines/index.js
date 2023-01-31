@@ -33,7 +33,7 @@ const Medicines = () => {
             </p>
             <Divider />
             <h5>
-              Quantity Available : {medicine.quantityAvailabe} {medicine.unit}
+              Quantity Available : {medicine.quantityAvailable} {medicine.unit}
             </h5>
             <h5>
               Quantity Imported : {medicine.quantityImported} {medicine.unit}
