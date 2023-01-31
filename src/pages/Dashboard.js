@@ -109,7 +109,7 @@ const Dashboard = () => {
     <Row gutter={DEFAULT_GUTTER} justify='space-between'>
       {dashboardCards.map((card, i) => {
         return (
-          <Col xl={6} md={12} xs={12} key={i}>
+          <Col xl={6} lg={6} md={12} xs={12} key={i}>
             <Link to={card.url}>
               <Card style={{ width: '100%' }}>
                 <Card.Meta
@@ -125,7 +125,7 @@ const Dashboard = () => {
 
 
 
-      <Col xl={12} md={24} sm={24} xs={24}>
+      <Col xl={12} lg={12} md={24} sm={24} xs={24}>
         <Card>
           <Typography.Title level={3}>Medicines</Typography.Title>
           <Table
@@ -161,7 +161,7 @@ const Dashboard = () => {
           />
         </Card>
       </Col>
-      <Col xl={12} md={24} sm={24} xs={24}>
+      <Col xl={12} lg={12} md={24} sm={24} xs={24}>
         <Card>
           <Typography.Title level={3}>Last transactions</Typography.Title>
           <Table
